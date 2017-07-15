@@ -1,0 +1,5 @@
+RewriteEngine on
+
+ErrorDocument 404 http://www.isima.fr/bde/?page=accueil
+ErrorDocument 403 http://www.isima.fr/bde/?page=accueil
+ErrorDocument 500 http://www.isima.fr/bde/?page=accueil

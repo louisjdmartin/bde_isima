@@ -1,0 +1,156 @@
+body
+{
+  font-family: Consolas, serif;
+  color: white;
+  
+  background: url("images/background.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+table
+{
+  border: 2px groove;
+}
+
+h1
+{
+  font-family: Arial;
+  text-align:center;
+  
+  position: relative;
+  top: 9px;
+}
+
+.overElemnt
+{
+    /*display: inline-block;*/
+  background: url("images/bgover.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  color: black;
+}
+
+#body
+{
+  /*position:absolute;*/
+  top: 20px;
+  
+  min-width: 90%;
+}
+
+#TabSem
+{
+  width: 30%;
+  height: 30%;
+}
+
+#menu
+{
+  width: 99%;
+  height:20px;
+  
+  background: beige;
+  
+  position:absolute;
+  
+  top: 0px;
+  font-size: 1.3em;
+}
+
+#WE
+{
+  display: inline;
+
+  margin-left: auto;
+  margin-right: auto;
+  
+  position: absolute;
+  top: 155px;
+  left: 365px;
+}
+
+#detailJour
+{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  border: 1px solid #999;
+  max-width:98%;
+}
+
+a:link
+{
+  color:blue;
+  text-decoration:none;
+}
+
+a:visited
+{
+  color:blue;
+}
+
+.cliquable:hover
+{
+  background: grey;
+  cursor: pointer;
+}
+
+.occupe
+{
+  background: url("images/bgoverred.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.occupe:hover
+{
+  background:darkred;
+}
+
+.libre
+{
+  background: url("images/bgovergreen.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* Administration */
+#admin
+{
+  margin-top: 30px;
+}
+
+.liste
+{
+   border: 2px solid;
+}
+
+#admin .liste .surbrill:hover
+{
+  background: url("images/bgoverblue.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#admin .center
+{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  
+  
+  width: auto;
+  border: 1px solid #999;
+
+}

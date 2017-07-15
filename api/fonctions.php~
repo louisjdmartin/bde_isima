@@ -1,0 +1,8 @@
+<?php
+	function date_joli($time)
+	{
+		$mois = array(NULL, "janvier", "fevrier", "mars", "avril", "mai", "juin", "juillet", "aout", "septembre", "octobre", "novembre", "decembre");
+		$jours = array("dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche");
+		$retour = $jours[intval(date("w", $time))] . " " . date('d', $time) . " " . $mois[intval(date("m", $time))] . " à ". date("H:i", $time);
+		return $retour;
+	}

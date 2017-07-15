@@ -1,0 +1,32 @@
+function load_club(id)
+{
+	document.getElementById('club_nom').innerHTML = "Chargement...";
+	document.getElementById('club_img').innerHTML = "";
+	document.getElementById('club_presentation').innerHTML = "";
+	
+	$.getJSON("./api/ajax/get_club?id="+id).done(function(data){
+		document.getElementById('club_nom').innerHTML = data.liste[0].nom;
+		document.getElementById('club_img').innerHTML = "<img src='"+data.liste[0].img+"' />";
+		document.getElementById('club_presentation').innerHTML = data.liste[0].presentation;
+	});
+}
+function identification()
+{
+	$('#error').hide();
+	$('#load').show();
+	$.getJSON("./api/ajax/genere_token", {login:$('#mail').val(), pass:$('#passwd').val()}).done(function(data){
+		$('#load').hide();
+		if(data.error==1)
+		{
+			$('#error_msg').html(data.msg);
+			$('#error').show();
+		}
+		else
+		{
+			$('#ok').show();
+			$('#form').hide();
+			window.location="./espace_ZZ?token="+data.token;
+			$('#a_redirect').html("<a href='./espace_ZZ?token="+data.token+"'>Redirection impossible ?</a>");
+		}
+	});
+}

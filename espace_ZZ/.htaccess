@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteRule ^([a-z_]+)$   index.php?page=$1 [L]
+RewriteRule ^([a-z_]+)([0-9]+)$   index.php?page=$1&fast_add_articles=true&carte=$2 [L]
+RewriteRule ^([a-z_]+).([0-9]+)$   index.php?page=$1&id=$2 [L]
