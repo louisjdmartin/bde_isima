@@ -1,1 +1,4 @@
 *.conf.php
+/images/accueil_photos
+/images/articles
+/espace_ZZ/images/uploads
