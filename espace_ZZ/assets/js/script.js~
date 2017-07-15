@@ -1,0 +1,239 @@
+$("#carte").keyup(function(e)
+{
+    console.log(e.keyCode);
+    if(e.keyCode=="40")//BAS
+    {
+	$('#index_cherche').val(parseInt($('#index_cherche').val()) + 1 );
+	if(parseInt($('#index_cherche').val())>$(".nom_recherche").length-1)$('#index_cherche').val(0);
+	$( ".nom_recherche" ).each(function( index ) {
+	    if(index == parseInt($('#index_cherche').val())) $( this ).addClass("active");
+	       else $(this).removeClass("active");
+	});
+    }
+    else if(e.keyCode==38)//HAUT
+    {
+	$('#index_cherche').val(parseInt($('#index_cherche').val()) - 1 );
+        if(parseInt($('#index_cherche').val())<0)$('#index_cherche').val(0);
+	$( ".nom_recherche" ).each(function( index ) {
+            if(index == parseInt($('#index_cherche').val())) $( this ).addClass("active");
+	    else $(this).removeClass("active");
+        });
+
+    }
+    else if(e.keyCode==13)//ENTER
+    {
+	console.log("ENTER");
+	$( ".nom_recherche" ).each(function( index ) {
+            if($(this).hasClass("active")){
+		$('#carte').val($(this).text());
+		cherche_carte();
+	    }
+	    else cherche_carte();
+        });
+
+    }
+    else cherche_carte();
+});
+
+function popup(html)
+{
+	$('#popup').html(html);
+	$('#fond_popup').fadeIn(1500);
+	$('#popup,#close_popup').fadeIn(200);
+}
+function close_popup(){
+	$('#fond_popup,#close_popup').fadeOut(200);
+	$('#popup').fadeOut(200);
+}
+function load(){
+	
+	$('#load,#fond_load').show();
+}
+var fin_load_timeout;
+function fin_load(html){
+	$('#load,#fond_load').hide();
+	$('#fin_load').hide().slideDown(300)
+	clearInterval(fin_load_timeout);
+	$('#fin_load_msg').html(html);
+	fin_load_timeout = setTimeout("$('#fin_load').slideUp(200);", 5000);
+}
+$('#fond_popup,#close_popup').click(function(){
+	close_popup();
+});
+function get_all_recharges(numero)
+{
+	popup("<h3>Chargement...</h3><ul id='liste_recharges'></ul>");
+	$.getJSON('../api/ajax/get_log_recharges', {nombre: 1000, token: $('#token').val(), numero:numero}).done(function(data){
+		html = "<h3>Historique</h3><ul id='liste_recharges'>";
+		for(i=0;i<data.nb_elt;i++){
+			if(data.liste[i].montant>0)html = html + '<li><span style="display:inline-block;width:64px;color:green">+'+data.liste[i].montant+'€</span>';
+			if(data.liste[i].montant<0)html = html + '<li><span style="display:inline-block;width:64px;color:red">'+data.liste[i].montant+'€</span>';
+			
+			html = html + " le " + data.liste[i].date + "</li>";
+		}
+		html = html + "</ul>";
+		$('#popup').html(html);
+	});
+}
+function get_all_consos(numero)
+{
+	popup("<h3>Chargement...</h3><ul id='liste_recharges'></ul>");
+	$.getJSON('../api/ajax/get_log_consos', {nombre: 1000, token: $('#token').val(), numero:numero}).done(function(data){
+		html = "<h3>Historique</h3><ul id='liste_recharges'>";
+		for(i=0;i<data.nb_elt;i++){
+			html = html + '<li><span style="display:inline-block;width:64px;color:red">-'+data.liste[i].tarif+'€</span>';
+			
+			html = html + data.liste[i].article + " le " + data.liste[i].date ;
+			if(data.liste[i].anciensolde>0)html = html + " (ancien solde:  <span style='display:inline-block;color:green'>" + data.liste[i].anciensolde+"€</span>)</li>";
+			if(data.liste[i].anciensolde<0)html = html + " (ancien solde: <span style='display:inline-block;color:red'>" + data.liste[i].anciensolde+"€</span>)</li>";
+		}
+		html = html + "</ul>";
+		$('#popup').html(html);
+	});
+}
+
+function get_all_articles(numero){
+	popup("<h3>Chargement...</h3><div id='liste_articles'></ul>");
+	$.getJSON('../api/ajax/get_liste_articles').done(function(data){
+		html = "<h3>Encaisser sur la carte <a onclick='autre_carte();return false;' href='#' style='text-decoration:underline'>"+numero+"</a> /  <a onclick='recharge("+numero+");return false;' href='#' style='text-decoration:underline'>Recharger</a></h3><div id='liste_articles'>";
+		for(i=0;i<data.nb_elt;i++){
+			html = html + '<span class="article" onclick="encaisser('+numero+', '+data.liste[i].id+')"><img src="http://www.isima.fr/bde/'+data.liste[i].img+'" /><br />'+data.liste[i].nom+' ('+data.liste[i].tarif+'€)</span>';
+			
+		}
+		html = html + "</div>";
+		$('#popup').html(html);
+	});
+}
+function encaisser(carte, article)
+{
+	load();
+	$.getJSON('../api/ajax/encaisser_article', {carte: carte, id_article: article, token: $('#token').val()}).done(function(data){
+		if(data.solde>0){ $('#affichage_solde').html('<span style="color:green">+'+data.solde+'€</span>'); }
+		else {$('#affichage_solde').html('<span style="color:red">'+data.solde+'€</span>');}
+		html_ul = $('#ul_consos').html();
+		html = '<li><span style="display:inline-block;width:60px;color:red">-'+data.tarif+'€</span> ';
+		html = html + data.nom;
+		html = html + '<br><span style="display:inline-block;width:60px;">&nbsp;</span> &Agrave; l\'instant</li>';
+		$('#ul_consos').html(html + html_ul);
+		$('#ul_consos li:last').remove()
+		if(data.solde>=0)fin_load("Nouveau solde: "+data.solde+"€");
+		else fin_load("<strong>ATTENTION ! SOLDE NEGATIF</strong>")
+	});
+}
+function recharge(numero){
+	html = "<h3>Recharger la carte <a onclick='autre_carte();return false;' href='#' style='text-decoration:underline'>"+numero+"</a></h3>";
+	html = html + "<form onsubmit='rechargement("+numero+");return false;'>";
+	html = html + "<input type='text' placeholder='Saisir un montant' id='montant_recharge' required />";
+	html = html + "<input style='float:right;' type='submit' value='Recharger' />";
+	html = html + "</form>";
+	popup(html);
+	$('#montant_recharge').focus();
+}
+function rechargement(numero){
+	montant = $('#montant_recharge').val();
+	close_popup();
+	load();
+	$.getJSON('../api/ajax/recharge_carte', {carte: numero, montant: montant, token: $('#token').val()}).done(function(data){
+		if(data.reussi==false){fin_load("<strong>IT'S A FAIL !</strong> Un truc n'a pas marché, t'as bien entrée un nombre ?")}
+		else {
+			if(data.solde>0){ $('#affichage_solde').html('<span style="color:green">+'+data.solde+'€</span>'); }
+			else {$('#affichage_solde').html('<span style="color:red">'+data.solde+'€</span>');}
+			html_ul = $('#ul_recharge').html();
+			if(montant>0)html = " <li><span style='width:60px;display:inline-block;color:green'>+" + montant+"€ </span>";
+			else html = " <li><span style='width:60px;display:inline-block;color:red'>" + montant+"€ </span>";
+			html = html + ' à l\'instant</li>';
+			$('#ul_recharge').html(html + html_ul);
+			$('#ul_recharge li:last').remove()
+			if(data.solde>=0)fin_load("Nouveau solde: "+data.solde+"€");
+			else fin_load("<strong>ATTENTION ! SOLDE NEGATIF</strong>")
+		}
+	});
+}
+function autre_carte()
+{
+	close_popup();
+	$('#carte').focus();
+}
+var xhr;
+function cherche_carte()
+{
+    if(xhr)xhr.abort();
+		q = $('#carte').val();
+		html = "<input type='hidden' value='-1' id='index_cherche' />";
+		if(q.length > 0)xhr = $.getJSON('../api/ajax/cherche_carte', {q:q, token:$('#token').val()}).done(function(data){
+			for(i=0;i<data.nb_elt;i++){
+			    html = html + "<span class='nom_recherche' onclick='$(\"#carte\").val(\""+data.liste[i].carte+" "+data.liste[i].prenom+"\");cherche_carte();'>"  + data.liste[i].nom+' '+data.liste[i].prenom+' '+data.liste[i].surnom+' '+data.liste[i].carte +'</span>';
+			}
+			if(data.nb_elt==0){
+				html = "Aucun résultat.";
+			}
+			if(data.nb_elt>20){
+				html = data.nb_elt + " résultats.";
+			}
+			$('#resultats').html(html);
+			if(data.nb_elt==1)window.location="./?page=carte&fast_add_articles=true&carte="+data.liste[0].carte;
+		});
+		else $('#resultats').html("");
+}
+function edit_article(id, nom, img, tarif)
+{
+	if(id==0)efface_button="";
+	else efface_button = "<a style='float:left' class='button' href='#' onclick='$(\"#nom_art\").val(\"\");valide_article();'>Effacer</a>";
+	popup("<h3>Edition d'article</h3>\
+	<form onsubmit='valide_article();return false;'>\
+	<input value='"+id+"' type='hidden' id='id_art' />\
+	<label for=''>Image</label><input value='"+img+"'  type='text' id='img_art' disabled /><input type='file' name='file' id='btn_upload' />\
+	<div id='progress' class='progress'><div class='progress-bar progress-bar-success'></div></div>\
+	<label for='nom_art'>Nom</label><input value='"+nom+"'  type='text' id='nom_art' />\
+	<label for='tarif_art'>Tarif</label><input value='"+tarif+"'  type='text' id='tarif_art' />\
+	\
+	<a style='float:right' class='button' href='#' onclick='valide_article()'>Sauvegarder</a>&nbsp;\
+	"+efface_button+"\
+	</form>\
+	");
+	$('#btn_upload').fileupload({
+			url: "./assets/php/upload.php?id="+id,
+			dataType: 'html',
+			done: function (e, data) {
+				if(data.result=="")alert("Fichier refusé !\nTaille trop importante, erreur d'upload ou extension non correcte (png, jpg, jpeg)");
+				$('#img_art').val(data.result);
+				console.log(data);
+			},
+			progressall: function (e, data) {
+				var progress = parseInt(data.loaded / data.total * 100, 10);
+				if(progress==100){
+					$('#progress .progress-bar').css(
+					'background',
+					'lightblue'
+				);
+				}
+				$('#progress .progress-bar').css(
+					'width',
+					progress + '%'
+				);
+			}
+		});
+}
+function valide_article()
+{
+	load();
+	$.getJSON('../api/ajax/modifier_article', {id: $('#id_art').val(), img:$('#img_art').val(), tarif: $('#tarif_art').val(),nom: $('#nom_art').val(), token: $('#token').val()}, function(data){
+		if(data.error==0)
+		{
+			window.location.reload();
+		}
+		else 
+		{
+			fin_load("<strong>ERREUR: </strong>"+data.msg);
+		}
+	});
+	
+}
+
+function show_stats()
+{
+	stat = $('#selected_stat').val()
+	$('.stats').hide();
+	$('#'+stat).show();
+}
+show_stats();

@@ -1,0 +1,38 @@
+<?php
+	if(!isset($user['autorisations']['bde']))die("Cette page est réservée au BDE !");
+?>
+	<strong>En cours de codage</strong>: reviens plus tard
+
+
+	<div class="row 200%">
+		<div class="8u 12u$(medium) important(medium)">
+			<h3>Ventes</h3>
+
+			<select onchange="show_stats()" id="selected_stat">
+				<option value='today'>Aujourd'hui</option>
+				<option value='week'>Cette semaine (7 derniers jours)</option>
+				<option value='month'>Mois en cours</option>
+				<option value='30day'>30 derniers jours</option>
+			</select>
+
+
+
+			<div id="today" class="stats">
+				Aujourd'hui
+			</div>
+
+			<div id="week" class="stats">
+				Cette semaine
+			</div>
+
+			<div id="month" class="stats">
+				Mois
+			</div>
+
+			<div id="30day" class="stats">
+				30 jours
+			</div>
+		</div>
+		<div class="4u 12u$(medium) important(medium)">
+			<h3>Soldes</h3>	
+		</div>

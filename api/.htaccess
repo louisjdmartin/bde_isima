@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ajax/([a-zA-Z0-9]+) ajax.php [L] 
