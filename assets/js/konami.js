@@ -25,11 +25,13 @@ var Konami = function (callback) {
 			}
 		},
 		input: "",
-		pattern: "38384040373937396665",
+		pattern: 	 "38384040373937396665",
+		patterncogo: "67797179787388757376",
 		load: function (link) {
 			this.addEvent(document, "keydown", function (e, ref_obj) {
 				if (ref_obj) konami = ref_obj; // IE
 				konami.input += e ? e.keyCode : event.keyCode;
+				console.log(konami.input)
 				if (konami.input.length > konami.pattern.length)
 					konami.input = konami.input.substr((konami.input.length - konami.pattern.length));
 				if (konami.input == konami.pattern) {
@@ -37,6 +39,9 @@ var Konami = function (callback) {
 					konami.input = "";
 					e.preventDefault();
 					return false;
+				}
+				if (konami.input == konami.patterncogo) {
+					window.location="./RANDOMCOGO.php";
 				}
 			}, this);
 			this.iphone.load(link);
