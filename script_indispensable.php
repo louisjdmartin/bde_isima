@@ -1,4 +1,4 @@
-﻿<script src="/assets/js/konami.js"></script>
+﻿<script src="./assets/js/konami.js"></script>
 <script>
 	function getRandomInt(min, max) {
 	  min = Math.ceil(min);
