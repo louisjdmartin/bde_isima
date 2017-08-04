@@ -43,7 +43,7 @@
 						</li>-->
 						<li><a href="agenda">Agenda des clubs</a></li>
 						<li><a href="edit_club">Modifier le club</a></li>
-						<li><a href="edit_events">Ajouter un événement</a></li>
+						<li><a href="edit_events">Gestion calendrier</a></li>
 					</ul>
 				</li>
 				
