@@ -1,55 +1,16 @@
 <?php
-	echo "<h2>Modification d'un club</h2>
-	<script>function edit_this_club(){
-		club = $('#club_id').val();
-		window.location = './edit_club.'+club;
-	}</script>
-	";
-	if(isset($user['autorisations']['club']))
-	{
-		$id=null;
-		if(!isset($_GET['id'])){
-			$clubs = api("get_club_gere", array("token" => $_SESSION['token']));
-			echo "
-				<form action='./' method='get'>
-					<input type='hidden' name='page' value='edit_club' />
-					<select name='id' id='club_id' onchange='edit_this_club();'><option>Choisir un club:</option>
-			";
-			$count = 0;
-			foreach($clubs['liste'] as $club)
-			{
-				$select = "";
-				if(isset($_GET['id']) && $_GET['id'] == $club['id'])$select = "selected";
-				echo "<option value='".$club['id']."' $select>".$club['nom']."</option>";	
-				$count ++;
-						
-			}
-			echo "</select></form>";
-			if($count==1)echo "Chargement...<script>window.location='./edit_club.".$club['id']."'</script>";
-		}else 
-		{	
-			$clubs = api("get_club_gere", array("token" => $_SESSION['token']));
-			foreach($clubs['liste'] as $club)
-				if(isset($_GET['id']) && $_GET['id'] == $club['id'])$id=$_GET['id'];
-			if($id==null)echo "<strong>Accès refusé:</strong> Ce club n'existe pas ou vous n'avez pas le droit de le modifier.<script>setTimeout(\"window.location='./edit_club'\", 5000);</script>";
-			else
-			{
-				echo "<a class='button' href='./edit_club'>Editer un autre club</a>";
-				if(isset($user['autorisations']['bde']))
-					echo "
-						<a class='button' onclick='changer_proprietaire(".$_GET['id'].")'>Changer le propriétaire</a>
-					";
-				else echo "
-						<a class='button' onclick='popup(\"<h3>Changement de propriétaire</h3>Le BDE peut changer le mail associé à ce club. Si cela est nécessaire, demandez à un membre du BDE de le faire pour vous.<br />Vous ne pouvez pas réaliser cette action par vous même car la procédure nécessite des droits que vous ne possédez pas.\")'>Changer le propriétaire</a>
-					";
-
-			}
-		}
-	
-	}
+	$id=club_selector("Modification d'un club", $user);
 
 	if($id!=null)
 	{
+		echo "<a class='button' href='./edit_club'>Editer un autre club</a>";
+		if(isset($user['autorisations']['bde']))
+			echo "
+				<a class='button' onclick='changer_proprietaire(".$_GET['id'].")'>Changer le propriétaire</a>
+			";
+		else echo "
+				<a class='button' onclick='popup(\"<h3>Changement de propriétaire</h3>Le BDE peut changer le mail associé à ce club. Si cela est nécessaire, demandez à un membre du BDE de le faire pour vous.<br />Vous ne pouvez pas réaliser cette action par vous même car la procédure nécessite des droits que vous ne possédez pas.\")'>Changer le propriétaire</a>
+			";
 		$club = api("get_club", array('id' => $id));
 		$club = $club['liste'][0];
 		echo " 
