@@ -25,7 +25,7 @@
 	function authentification($token){
 		global $bdd;
 		$bdd->query("DELETE FROM token WHERE expiration<".time());
-		$auth = $bdd->query ('SELECT grade, id, numero, nom, prenom, surnom, mail, expiration FROM membres JOIN token WHERE token.account=membres.id AND token.token = "'.addslashes($token).'"');
+		$auth = $bdd->query ('SELECT grade, id, numero, nom, prenom, surnom, mail, expiration, cotisation FROM membres JOIN token WHERE token.account=membres.id AND token.token = "'.addslashes($token).'"');
 		$retour = array(
 			"autorisations" => NULL,
 			"uti_id" => NULL,
@@ -33,7 +33,8 @@
 			"nom" => NULL,
 			"prenom" => NULL,
 			"surnom" => NULL,
-			"expiration" => NULL
+			"expiration" => NULL,
+			"cotisation" => NULL
 		);
 		
 		foreach ($auth as $a)
@@ -48,6 +49,7 @@
 			$retour['surnom'] 	= utf8_encode($a['surnom']);
 			$retour['mail'] 	= $a['mail'];
 			$retour['expiration'] 	= $a['expiration'];
+			$retour['cotisation'] 	= $a['cotisation'];
 		}
 		
 		return $retour;
