@@ -25,14 +25,15 @@ function get_solde($settings, $objets){
 		$solde = $bdd->query("SELECT solde FROM membres WHERE id=".$objets['user_info']['uti_id']);
 	}else if(isset($objets['user_info']['autorisations']['bde']) AND isset($settings['numero']))
 	{
-		$solde = $bdd->query("SELECT solde FROM membres WHERE numero=".$settings['numero']);
+		$solde = $bdd->query("SELECT solde,cotisation FROM membres WHERE numero=".$settings['numero']);
 	}
 	else return array("error" => 1, "msg" => "Action refusé !");
 	$sortie=NULL;
 	foreach($solde as $s){
 		$sortie = $s['solde'];
+		$cotis = $s['cotisation'];
 	}
 	
-	return array("solde" => $sortie);
+	return array("solde" => $sortie, "cotisation" => $cotis);
 }
 ?>
