@@ -22,7 +22,7 @@ function get_solde($settings, $objets){
 	$bdd = $objets['bdd'];
 	if($objets['user_info']['uti_id']!=NULL and (!isset($objets['user_info']['autorisations']['bde']) or !isset($settings['numero'])))
 	{
-		$solde = $bdd->query("SELECT solde FROM membres WHERE id=".$objets['user_info']['uti_id']);
+		$solde = $bdd->query("SELECT solde,cotisation FROM membres WHERE id=".$objets['user_info']['uti_id']);
 	}else if(isset($objets['user_info']['autorisations']['bde']) AND isset($settings['numero']))
 	{
 		$solde = $bdd->query("SELECT solde,cotisation FROM membres WHERE numero=".$settings['numero']);
