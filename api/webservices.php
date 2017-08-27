@@ -28,7 +28,7 @@ if(isset($_GET['table'])){
 		}
 		else
 		{
-			$reponse = $bdd->query('SELECT id, img, nom, description_courte, presentation, is_active, facebook, twitter, googleplus FROM clubs');
+			$reponse = $bdd->query('SELECT id, nom, CONCAT("'.$_SERVER['HTTP_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'",img) AS img, description_courte, presentation, is_active, facebook, twitter, googleplus FROM clubs');
 		}
 		
 	} else if($_GET['table'] == "events"){
@@ -50,7 +50,9 @@ if(isset($_GET['table'])){
 	$rows = array();
 	// On remplit le tableau avec chaque objet
 	while($r = $reponse->fetchObject()){
+		
 		$rows[]=$r;
+		
 	}
 	print json_encode($rows);
 	$reponse->closeCursor();
