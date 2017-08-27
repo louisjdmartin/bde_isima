@@ -28,7 +28,7 @@ if(isset($_GET['table'])){
 		}
 		else
 		{
-			$reponse = $bdd->query('SELECT id, nom, CONCAT("'.$_SERVER['HTTP_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'",img) AS img, description_courte, presentation, is_active, facebook, twitter, googleplus FROM clubs');
+			$reponse = $bdd->query('SELECT id, nom, CONCAT("https://'.$_SERVER['HTTP_HOST'].'",img) AS img, description_courte, presentation, is_active, facebook, twitter, googleplus FROM clubs');
 		}
 		
 	} else if($_GET['table'] == "events"){
