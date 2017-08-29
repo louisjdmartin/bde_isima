@@ -44,7 +44,7 @@
 	}
 	function annee_scolaire()
 	{
-		if (date('m') >= 07)
+		if (date('m') >= 09)
 		{
 			return date('Y') + 1;
 		}
@@ -84,17 +84,18 @@
 
 	function club_selector($titre, $user)
 	{
-		echo "<h2>".$titre."</h2>
-		<script>function edit_this_club(){
-			club = $('#club_id').val();
-			window.location = './".$_GET['page'].".'+club;
-		}</script>
-		";
+		
 		$id=null;
 		if(isset($user['autorisations']['club']))
 		{
 			
 			if(!isset($_GET['id'])){
+				echo "<h2>".$titre."</h2>
+				<script>function edit_this_club(){
+					club = $('#club_id').val();
+					window.location = './".$_GET['page'].".'+club;
+				}</script>
+				";
 				$clubs = api("get_club_gere", array("token" => $_SESSION['token']));
 				echo "
 					<form action='./' method='get'>
@@ -104,11 +105,8 @@
 				$count = 0;
 				foreach($clubs['liste'] as $club)
 				{
-					$select = "";
-					if(isset($_GET['id']) && $_GET['id'] == $club['id'])$select = "selected";
-					echo "<option value='".$club['id']."' $select>".$club['nom']."</option>";	
+					echo "<option value='".$club['id']."'>".$club['nom']."</option>";	
 					$count ++;
-							
 				}
 				echo "</select></form>";
 				if($count==1)echo "Chargement...<script>window.location='./".$_GET['page'].".".$club['id']."'</script>";
@@ -116,7 +114,10 @@
 			{	
 				$clubs = api("get_club_gere", array("token" => $_SESSION['token']));
 				foreach($clubs['liste'] as $club)
-					if(isset($_GET['id']) && $_GET['id'] == $club['id'])$id=$_GET['id'];
+					if(isset($_GET['id']) && $_GET['id'] == $club['id']){
+						$id=$_GET['id'];
+						echo "<h2>".$titre." (".$club['nom'].")</h2>";
+					}
 				if($id==null)echo "<strong>Accès refusé:</strong> Ce club n'existe pas ou vous n'avez pas le droit de le modifier.<script>setTimeout(\"window.location='./".$_GET['page']."'\", 5000);</script>";
 			}
 		
