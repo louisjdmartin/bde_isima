@@ -44,7 +44,7 @@
 	}
 	function annee_scolaire()
 	{
-		if (date('m') >= 09)
+		if (date('m') >= 9)
 		{
 			return date('Y') + 1;
 		}
