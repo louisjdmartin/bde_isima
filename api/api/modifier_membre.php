@@ -37,16 +37,16 @@ function modifier_membre($settings, $objets){
 		
 		send_mail($settings['mail'], "Création de ton compte BDE", "
 			Bonjour ".$settings['prenom']." !<br />
-			Suite à ta cotisation, ton compte BDE viens d'être créé, pour y acceder c'est simple, rends toi sur <a href='http://bde.isima.fr/#zz'>bde.isima.fr</a>.
+			Suite à ta cotisation, ton compte BDE vient d'être créé, pour y accéder c'est simple, rends-toi sur <a href='http://bde.isima.fr/#zz'>bde.isima.fr</a>.
 			<br />
 			<br />Voici tes identifiants, pense à changer le mot de passe.
 			<br /><strong>Email: </strong> ".$settings['mail']."
 			<br /><strong>Mot de passe: </strong> ".$pass."
 			<br /><strong>Carte:</strong> ".$carte."
 
-			<br />Sur le site tu peut être identifié par carte ou par mail
-			<br /><em>A quoi sert ma carte ?</em>
-			<br />Ta carte BDE te permet de commander au bar sans sortir ton porte-monnaie ! Rend toi au BDE avec un petit billet, dit que tu veux recharger la carte ".$carte." et tu pourra consommer diverses friandises et boissons avec ta carte BDE, il te suffit simplement de donner ton numéro à la personne qui te sert. Attention on ne sert pas si tu n'a plus d'argent sur ta carte ! (sauf si tu payes en liquide) tu peux consulter ton solde sur le site ou le demander à un membre du BDE.<br /><br/>
+			<br />Sur le site tu peux être identifié par carte ou par mail.
+			<br /><em>À quoi sert ma carte ?</em>
+			<br />Ta carte BDE te permet de commander au bar sans sortir ton porte-monnaie ! Rends-toi au BDE avec un petit billet, dis que tu veux recharger la carte ".$carte." et tu pourras consommer diverses friandises et boissons avec ta carte BDE, il te suffit simplement de donner ton numéro à la personne qui te sert. Attention on ne sert pas si tu n'as plus d'argent sur ta carte ! (sauf si tu payes en liquide) tu peux consulter ton solde sur le site ou le demander à un membre du BDE.<br /><br/>
 		");	
 		$bdd->query("INSERT INTO membres VALUES(
 			NULL,
