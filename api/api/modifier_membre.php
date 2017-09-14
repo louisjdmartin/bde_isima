@@ -50,8 +50,8 @@ function modifier_membre($settings, $objets){
 		");	
 		$bdd->query("INSERT INTO membres VALUES(
 			NULL,
-			'".addslashes($settings['nom'])."',
-			'".addslashes($settings['prenom'])."',
+			'".utf8_decode(addslashes($settings['nom']))."',
+			'".utf8_decode(addslashes($settings['prenom']))."',
 			'".$carte."',
 			'".md5($pass)."',
 			'".addslashes($settings['mail'])."',
