@@ -17,6 +17,8 @@
 					<a href="#">Accès ZZ</a>
 					<ul>
 						<li><a href="carte">Carte BDE</a></li>
+						<li><a href="solde_isibouffe">Carte ISIBOUFFE</a></li>
+						<!--<li><a href="inscription">S'inscrire à un événement / repas</a></li>-->
 						<li><a href="articlesbde">Articles en vente au BDE</a>
 						<li><a href="calendrier">Calendrier</a></li>
 						<li><a href="annales">Annales</a></li>
@@ -41,6 +43,7 @@
 								<li><a href="#">#Flemme</a></li>
 							</ul>
 						</li>-->
+						<li><a href="evenement_inscription">Gestion des inscriptions</a></li>
 						<li><a href="agenda">Agenda des clubs</a></li>
 						<li><a href="edit_club">Modifier le club</a></li>
 						<li><a href="edit_events">Gestion calendrier</a></li>
