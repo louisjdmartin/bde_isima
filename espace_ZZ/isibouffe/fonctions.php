@@ -5,7 +5,7 @@ ini_set("display_errors", "1");
 
 try
 {
-	$donnees = new PDO('mysql:host=localhost;dbname=isibouffe;charset=utf8', 'root', 'root');
+	$donnees = new PDO('mysql:host=localhost;dbname=bde;charset=utf8', 'bde', 'gkioXvQRD!L2');
 	
 }
 catch (Exception $e)
