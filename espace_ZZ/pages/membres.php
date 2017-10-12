@@ -12,8 +12,8 @@
 		else $order="ASC";
 		echo "
 			<button onclick='add_membre()'>Ajouter un membre cotisant</button>
-			
-			<table style='width:100%'>
+			<div style='overflow-x:auto'>
+			<table style='width:100%' class='overflowtable'>
 				<tr style='width:32px;text-align:left;'>
 					<th><a href='./?page=membres&order=$order&orderby=id $order'>#</a></th>
 					<th><a href='./?page=membres&order=$order&orderby=nom $order, prenom $order'>Nom Prenom Surnom</a></th>
@@ -42,7 +42,7 @@
 				</tr>
 			";
 		}
-		echo "</table>";
+		echo "</table></div>";
 	}
 ?>
 
