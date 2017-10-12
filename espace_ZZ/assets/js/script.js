@@ -4,6 +4,11 @@ function popup(html)
 	$('#fond_popup').fadeIn(1500);
 	$('#popup,#close_popup').fadeIn(200);
 }
+function popup_force_actualise(html)
+{
+	popup(html);
+	$('#close_popup,#fond_popup').click(function(){window.location.reload();});
+}
 function close_popup(){
 	$('#fond_popup,#close_popup').fadeOut(200);
 	$('#popup').fadeOut(200);
@@ -73,8 +78,9 @@ function encaisser(carte, article)
 		if(data.solde>0){ $('#affichage_solde').html('<span style="color:green">+'+data.solde+'€</span>'); }
 		else {$('#affichage_solde').html('<span style="color:red">'+data.solde+'€</span>');}
 		html_ul = $('#ul_consos').html();
-		html = '<li><span style="display:inline-block;width:60px;color:red">-'+data.tarif+'€</span> ';
-		html = html + data.nom;
+	        if(data.tarif>0)html = '<li><span style="display:inline-block;width:60px;color:red">-'+data.tarif+'€</span> ';
+	    else html = '<li><span style="display:inline-block;width:60px;color:green">'+data.tarif+'€</span> ';
+	        html = html + data.nom;
 		html = html + '<br><span style="display:inline-block;width:60px;">&nbsp;</span> &Agrave; l\'instant</li>';
 		$('#ul_consos').html(html + html_ul);
 		$('#ul_consos li:last').remove()
@@ -159,7 +165,6 @@ function edit_article(id, nom, img, tarif)
 			done: function (e, data) {
 				if(data.result=="")alert("Fichier refusé !\nTaille trop importante, erreur d'upload ou extension non correcte (png, jpg, jpeg)");
 				$('#img_art').val(data.result);
-				console.log(data);
 			},
 			progressall: function (e, data) {
 				var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -541,7 +546,6 @@ function edit_partenaire(id){
 			done: function (e, data) {
 				if(data.result=="")alert("Fichier refusé !\nTaille trop importante, erreur d'upload ou extension non correcte (png, jpg, jpeg)");
 				$('#img_part').val(data.result);
-				console.log(data);
 			},
 			progressall: function (e, data) {
 				var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -594,7 +598,6 @@ function edit_news(id){
 			done: function (e, data) {
 				if(data.result=="")alert("Fichier refusé !\nTaille trop importante, erreur d'upload ou extension non correcte (png, jpg, jpeg)");
 				$('#img_part').val(data.result);
-				console.log(data);
 			},
 			progressall: function (e, data) {
 				var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -625,6 +628,320 @@ function valide_news(id){
 		window.location.reload();
 	});
 }
+
+
+
+function add_evt(id_club)
+{
+	popup("<h3>Ajouter un événement avec inscription</h3>\
+	<form onsubmit='return false'>\
+	<label>Nom de l'événement</label>\
+	<input type='text' id='nom_event' />\
+	<label>Places disponibles (0=infini)</label>\
+	<input type='number' id='places_event' value='0' step='1' />\
+	<label>Paiement par carte BDE autorisé</label>\
+	<input type='radio' id='carte_bde_event' name='carte_bde_event' value='0' checked />Non\
+	<input type='radio' id='carte_bde_event_true' name='carte_bde_event' value='1' />Oui\
+	<label>Date</label>\
+	<input style='width:48%; display:inline;' type='text' id='event_deb' placeholder='Date limite inscription' />\
+	\
+	<input style='width:48%; display:inline;' type='text' id='event_fin' placeholder='Date événement' />\
+	<br /><button style='float:right' onclick='valide_add_evt("+id_club+");' id='valide_btn'>Suivant</button><button style='float:right' id='valide_btn_load'>Chargement...</button>");
+
+	$('#nom_event').focus();
+	$.timepicker.setDefaults($.timepicker.regional['fr']);
+	var startDateTextBox = $('#event_deb');
+	var endDateTextBox = $('#event_fin');
+
+	startDateTextBox.datetimepicker({ 
+		regional: 'fr',
+		dateFormat: "yy-mm-dd",
+		firstDay: 1,
+		controlType: 'select',
+		stepMinute: 1,
+		numberOfMonths: 1,
+		minDate: new Date(),
+		oneLine: true,
+		onClose: function(dateText, inst) {
+			if (endDateTextBox.val() != '') {
+				var testStartDate = startDateTextBox.datetimepicker('getDate');
+				var testEndDate = endDateTextBox.datetimepicker('getDate');
+				if (testStartDate > testEndDate)
+					endDateTextBox.datetimepicker('setDate', testStartDate);
+			}
+			else {
+				endDateTextBox.val(dateText);
+			}
+		},
+		onSelect: function (selectedDateTime){
+			endDateTextBox.datetimepicker('option', 'minDate', startDateTextBox.datetimepicker('getDate') );
+		}
+	});
+	endDateTextBox.datetimepicker({ 
+		controlType: 'select',
+		dateFormat: "yy-mm-dd",
+		stepMinute: 1,
+		numberOfMonths: 1,
+		firstDay: 1,
+		minDate: new Date(),
+		oneLine: true,
+		onClose: function(dateText, inst) {
+			if (startDateTextBox.val() != '') {
+				var testStartDate = startDateTextBox.datetimepicker('getDate');
+				var testEndDate = endDateTextBox.datetimepicker('getDate');
+				if (testStartDate > testEndDate)
+					startDateTextBox.datetimepicker('setDate', testEndDate);
+			}
+			else {
+				startDateTextBox.val(dateText);
+			}
+		},
+		onSelect: function (selectedDateTime){
+			startDateTextBox.datetimepicker('option', 'maxDate', endDateTextBox.datetimepicker('getDate') );
+		}
+	});
+	$('#valide_btn_load').hide();
+
+}
+
+
+function valide_add_evt(id_club){
+	if($("#event_deb").val() == "" || $("#event_fin").val() == "" || $("#nom_event").val() == "")
+		return alert("Formulaire incomplet !");
+	$('#valide_btn_load,#valide_btn').toggle();
+	$.post('../api/ajax/add_evt', {
+		token:$('#token').val(),
+		id_club:id_club, 
+		nom:$('#nom_event').val(),
+		places:$('#places_event').val(), 
+		limite:$('#event_deb').val(), 
+		date:$('#event_fin').val(), 
+		bde:$('#carte_bde_event_true').is(':checked')
+	},function(data){
+		data = JSON.parse(data);
+		$('#load,#fond_load').hide();
+		evt_add_article(data.id);
+	});
+}
+
+
+function evt_edit_article(id){
+	popup_force_actualise("<h3>Modifier les articles</h3>\
+	<div id='liste_articles'>Chargement...</div>\
+	<br ><a onclick='evt_add_article("+id+")' class='button'>Ajouter...</a>");
+	
+	
+	$.getJSON("../api/ajax/get_liste_articles_evt?id_event="+id,function(data){
+		if(data.nb_elt==0)$('#liste_articles').html("Aucun article");
+		else{
+			$('#liste_articles').html("<table><tr><td>Nom</td><td>Qte dispo</td><td>Qte restante</td><td>Prix</td><td style='width:4%'>Effacer</td></tr></table>");
+			for(i=0;i<data.nb_elt;i++){
+				$('#liste_articles table').append("\
+					<tr>\
+						<td>"+data.liste[i].nom+"</td>\
+						<td>"+data.liste[i].qte_max+"</td>\
+						<td>"+data.liste[i].qte_dispo+"</td>\
+						<td>"+data.liste[i].prix+"</td>\
+						<td style='width:4%'><a class='button' onclick='evt_eff_article("+id+","+data.liste[i].id+")'>X</td>\
+					</tr>");
+			}
+		}
+	});
+	
+}
+function evt_eff_article(evt_id, art_id){
+	if (confirm("ATTENTION ! \nCELA ANNULE TOUTES LES COMMANDES PASSEES SUR CET ARTICLE!")){
+		load();
+		$.post('../api/ajax/del_art_evt', {
+			token:$('#token').val(),
+			id_evt:evt_id, 
+			id_article: art_id
+		},function(data){
+			data = JSON.parse(data);
+			$('#load,#fond_load').hide();
+			evt_edit_article(evt_id);
+		});
+	}
+}
+function evt_add_article(id){
+	popup_force_actualise("<h3>Ajouter un article</h3>\
+	<em>Une qté dispo égale à 0 ou non définie signifie qu'il n'y a pas de limites</em>\
+	<h4>Utiliser un nouvel article</h4>\
+	<form onsubmit='return false;'><table><tr>\
+	<td style='width:66%'><input type='text' id='art_name' placeholder='Saisir nom' /><td>\
+	<td style='width:14%'><input type='number' size=2 id='art_qte' placeholder='Qte' id='art_qte' min='0' step='1' /></td>\
+	<td style='width:16%'><input type='number' size=2 id='art_prix' placeholder='Prix'id='art_prix'  min='0' step='0.01' /></td>\
+	<td style='width:4%'><a onclick='evt_valide_add_article("+id+")' class='button'>+</a><td>\
+	</tr></table></form><h4>Réutiliser un ancien article</h4>\
+	<br ><div id='liste_articles'>Chargement...</div>\<br /></small>\
+	<a onclick='evt_edit_article("+id+")' class='button'>Précédent...</a>");
+	$('#art_name').focus();
+	
+	
+	$.getJSON("../api/ajax/get_old_art_evt?id_evt="+id+"&token="+$('#token').val(),function(data){
+		if(data.nb_elt==0)$('#liste_articles').html("Aucun article");
+		else{
+			$('#liste_articles').html("<form onsubmit='return false;'><table><tr><td>Nom</td><td>Qte</td><td>Prix</td><td style='width:4%'>Ajouter</td></tr></table></form>");
+			for(i=0;i<data.nb_elt;i++){
+				$('#liste_articles table').append("\
+					<tr>\
+						<td>"+data.liste[i].nom+"</td>\
+						<td style='width:14%'><input type='number' size=2 id='art_qte"+data.liste[i].id+"' placeholder='infini' id='art_qte' min='0' step='1' /></td>\
+						<td style='width:16%'>"+data.liste[i].prix+"€</td>\
+						<td style='width:4%'><a class='button' onclick='evt_add_old_article("+id+","+data.liste[i].id+")'>+</td>\
+					</tr>");
+			}
+		}
+	});
+}
+function evt_add_old_article(id_event,id_article){
+
+	if($("#art_qte"+id_article).val() == "")$("#art_qte"+id_article).val(0);
+	load();
+	$.post('../api/ajax/add_old_art_evt', {
+		token:$('#token').val(),
+		id_evt:id_event, 
+		id_article:id_article,
+		qte:$('#art_qte'+id_article).val()
+	},function(data){
+		data = JSON.parse(data);
+		$('#load,#fond_load').hide();
+		evt_add_article(id_event);
+	});
+}
+function evt_valide_add_article(id){
+	if($("#art_name").val() == "" ||  $("#art_prix").val() == "")
+		return alert("Formulaire incomplet !");
+	if($("#art_qte").val() == "")$("#art_qte").val(0);
+	$('#valide_btn_load,#valide_btn').toggle();
+	$.post('../api/ajax/add_art_evt', {
+		token:$('#token').val(),
+		id_evt:id, 
+		nom:$('#art_name').val(),
+		qte:$('#art_qte').val(), 
+		prix:$('#art_prix').val()
+	},function(data){
+		data = JSON.parse(data);
+		fin_load("Article ajouté: "+$('#art_name').val()+"<br />Prix:"+$('#art_prix').val()+"€<br />Qté:"+$('#art_qte').val()+" (0=infini)");
+		evt_add_article(id);
+	});
+}
+
+
+function genere_liste_commande(id_evt, fct){
+	load();
+	$.getJSON("../api/ajax/get_liste_articles_evt?id_event="+id_evt, function(data){
+		retour = {taille: 0, liste:[]};
+		for(i=0;i<data.nb_elt;i++){
+			if($('#qte'+data["liste"][i]['id']).val()>0){
+				retour.liste.push({
+					art_id: data['liste'][i]['id'],
+					art_nom: data['liste'][i]['nom'],
+					qte: $('#qte'+data["liste"][i]['id']).val(),
+					commentaire: $('#comment'+data["liste"][i]['id']).val(),
+					prix:data['liste'][i]['prix']
+				});
+				retour.taille++;
+			}
+		}
+		fct(retour);
+	});
+}
+
+function annuler_inscription_evt(id){
+	if(confirm("Voulez vous vraiment annuler votre inscription ?")){
+		load();
+		$.post("../api/ajax/evt_annuler_inscription", {token: $('#token').val(), id_evt: id}, function(data){
+			window.location.reload();
+		});
+	}
+}
+
+function valide_commande(id_evt)
+{
+	genere_liste_commande(id_evt, function(data){
+		if(document.getElementById('other') && $('#other').is(':checked')){
+			other = 1;
+			other_name = $('#other_name').val();
+		}
+		else{
+			other = 0;
+			other_name = "";
+		}
+
+		if(data.solde<total){cartebde=0}
+		else if(document.getElementById('bde') && $('#bde').is(':checked'))cartebde=1;
+		else cartebde=0;
+
+
+		$.post("../api/ajax/evt_inscription", {bde:cartebde, liste: data.liste, other:other, other_name:other_name, id_evt:id_evt, token: $('#token').val()},function(reponse){
+			reponse = JSON.parse(reponse);
+			if(reponse.error=="1"){
+				fin_load();
+				popup("<h3>Erreur !</h3><pre>"+reponse.error_msg+"</pre>");
+			}
+			else window.location.reload();
+		});
+	});
+}
+
+function show_commande(id_evt){
+	genere_liste_commande(id_evt, function(data){
+		$('html, body').stop().animate({
+	        'scrollTop': $('#recap').offset().top -64
+	    });
+		
+		$('#recap').html("<table style='width:100%'><tr><td><strong>Article</strong></th><td><strong>Qté</strong></th><td><strong>Prix (€)</strong></th><td><strong>Commentaire</strong></th></tr></table>");
+		total = 0;
+		for(i=0;i<data.taille;i++){
+			total += data.liste[i].qte*data.liste[i].prix
+			$('#recap table').append("<tr><td>"+data.liste[i].art_nom+"</td><td>"+data.liste[i].qte+"</td><td>"+(data.liste[i].qte*data.liste[i].prix)+"</td><td style='width:35%'>"+(data.liste[i].commentaire)+"</td></tr>");
+		}
+		$('#recap').append("<strong>TOTAL: "+total+"€</strong>");
+		
+		$.getJSON("../api/ajax/get_solde?token="+$('#token').val(),function(data){
+		if(data.solde<total){$('#carteBDE').hide();$('#noCarteBDE').show();}
+		else {$('#carteBDE').show();$('#noCarteBDE').hide();}
+			$('#load,#fond_load').hide();
+		})
+		
+	});
+}
+
+
+function encaisse_cmd(id_cmd, qte_max){
+	if(qte_max == 0){
+		close_popup();
+		alert("Vous avez déjà encaissé !");
+	}else {
+		popup("<h3>Encaisser</h3>Notez combien d'articles on été payées en liquide: <select id='qte_to_pay'></select><br /><button onclick='encaisse_liquide("+id_cmd+")'>Encaisser en liquide</button><hr />\
+		Ou saisir une carte BDE <input id='carte_bde_to_pay' type='number' /><br /><button onclick='encaisse_carte("+id_cmd+")'>Encaisser par carte</button>\
+		");
+		for(i=qte_max;i>=1;i--) $('#qte_to_pay').append("<option>"+i+"</option>");
+	}
+}
+function encaisse_liquide(id_cmd){
+	load();
+	$.post('../api/ajax/evt_encaisser', {token:$("#token").val(), id_cmd: id_cmd, qte: $('#qte_to_pay').val(), mode: "liquide"}, function(d){
+		window.location.reload();
+	});
+}
+function encaisse_carte(id_cmd){
+	load();
+	$.post('../api/ajax/evt_encaisser', {token:$("#token").val(), id_cmd: id_cmd, carte: $('#carte_bde_to_pay').val(), mode: "bde"}, function(d){
+		window.location.reload();
+	});
+}
+function annuler_cmd_club(id){
+	if(confirm("Voulez vous vraiment annuler votre inscription ?")){
+		load();
+		$.post('../api/ajax/evt_annuler_inscription_club', {token:$("#token").val(), id_cmd: id}, function(d){
+			window.location.reload();
+		});
+	}
+}
+
+
 $(document).ready(function(){
 		
 		show_stats();
@@ -672,9 +989,8 @@ $(document).ready(function(){
 			}
 			else if(e.keyCode==13)//ENTER
 			{
-			console.log("ENTER");
 				if($.isNumeric($('#carte').val()))
-						window.location="./carte"+$('#carte').val();
+						window.location="./?page=carte&fast_add_articles=true&carte="+$('#carte').val();
 				$( ".nom_recherche" ).each(function( index ) {
 					found = 0;
 					if($(this).hasClass("active")){
