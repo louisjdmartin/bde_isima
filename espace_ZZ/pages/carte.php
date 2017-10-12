@@ -39,7 +39,7 @@
 		</div>
 		<div class="4u 12u$(medium)">
 			<h3>Consommations</h3>
-			<?php if(isset($user['autorisations']['bde'])) { 
+	  <?php if(isset($user['autorisations']['bde'])) { 
 				echo "<a href='#' onclick='get_all_articles($carte); return false'>Ajouter une conso</a>";
 			} ?>
 				<ul id="ul_consos">
@@ -52,7 +52,7 @@
 						
 						
 						if($consos['nb_elt']>0)foreach ($consos['liste'] as $r) 
-							echo '<li><span style="display:inline-block;width:60px;color:red">-'.($r['tarif']).'€</span>
+							echo '<li><span style="display:inline-block;width:60px">'.solde(-$r['tarif']).'</span>
 						'.$r['article'].'
 						<br />
 						<span style="display:inline-block;width:60px;">&nbsp;</span>'.date_joli(strtotime($r['date'])).'
