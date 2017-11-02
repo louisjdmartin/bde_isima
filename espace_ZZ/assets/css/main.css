@@ -2775,5 +2775,10 @@
 		.calendrier table td .events{  position:relative;  width:16px;  height:0px;  margin:-20px -6px;  padding:0px;}
 		.calendrier table td .day{  position:absolute;  color:#8C8C8C;  bottom:-15px;  right:5px;  font-weight:bold;  font-size:14.3pt;}
 		.calendrier .year{  color:#D90000;  font-size:35px; line-height: 85px;}
+		table.overflowtable  tr td{min-width:64px;margin:16px;}
+		table.overflowtable  {min-width:600px;margin:16px;}
 	}
 	
+	.inline{
+		display:inline;
+	}

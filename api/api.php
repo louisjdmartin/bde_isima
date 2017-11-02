@@ -12,14 +12,13 @@
 			Retourne au format JSON
 */
 
-// ini_set("display_errors" , "1");
+//ini_set("display_errors" , "1");
 
 
 	global $bdd;	
-        require dirname(__FILE__) ."/config.conf.php";
+    require dirname(__FILE__) ."/config.conf.php";
 	$bdd = new PDO(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);	
-		
-	// $bdd = new PDO('mysql:host=localhost;dbname=bdd_bde', 'root', '');		
+				
 	include "fonctions.php";
 	if(isset($_COOKIE['token'])) $_SESSION['token'] = $_COOKIE['token'];
 	function authentification($token){

@@ -18,7 +18,7 @@
 
 function recharge_carte($settings, $objets){
 	$bdd = $objets['bdd'];	
-	if(isset($objets['user_info']['autorisations']['bde']) and isset($settings['montant']) and isset($settings['carte']) and is_numeric($settings['montant']) and is_numeric($settings['carte']))
+	if(isset($objets['user_info']['autorisations']['club']) and isset($settings['montant']) and isset($settings['carte']) and is_numeric($settings['montant']) and is_numeric($settings['carte']))
 	{
 		$settings['montant'] = str_replace("," , ".", $settings['montant']);
 		$infos = $bdd->query("SELECT id, solde, mail, prenom FROM membres WHERE numero=".$settings['carte']);

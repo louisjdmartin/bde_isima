@@ -143,6 +143,28 @@ function cherche_carte()
 	});
 	else $('#resultats').html("");
 }
+
+function cherche_carte_other(){
+	if(xhr)xhr.abort();
+	q = $('#other_carte').val();
+	html = "<input type='hidden' value='-1' id='index_cherche' />";
+	if(q.length > 0)xhr = $.getJSON('../api/ajax/cherche_carte', {q:q, token:$('#token').val()}).done(function(data){
+		for(i=0;i<data.nb_elt;i++){
+		    html = html + "<span class='nom_recherche' onclick='$(\"#other_carte\").val("+data.liste[i].carte+");cherche_carte_other();'>"  + data.liste[i].nom+' '+data.liste[i].prenom+' '+data.liste[i].surnom+' ('+data.liste[i].carte +') <strong>'+data.liste[i].solde+'€</strong></span>';
+		}
+		if(data.nb_elt==0){
+
+			html = "Aucun résultat.";
+
+		}
+		if(data.nb_elt>20){
+			html = data.nb_elt + " résultats.";
+		}
+		$('#resultats').html(html);
+		if(data.nb_elt==1)$('#other_carte').val(data.liste[0].carte);
+	});
+	else $('#resultats').html("");
+}
 function edit_article(id, nom, img, tarif)
 {
 	if(id==0)efface_button="";
@@ -629,6 +651,89 @@ function valide_news(id){
 	});
 }
 
+function valide_cp_evt(id_event){
+	if($("#event_deb").val() == "" || $("#event_fin").val() == "")
+		return alert("Formulaire incomplet !");
+	$('#valide_btn_load,#valide_btn').toggle();
+	$.post('../api/ajax/evt_copie', {
+		token:$('#token').val(),
+		id_evt: id_event,
+		date_limite_insc:$("#event_deb").val(),
+		date_event:$("#event_fin").val()
+	},function(data){
+		data = JSON.parse(data);
+		$('#load,#fond_load').hide();
+		evt_edit_article(data.id);
+	});
+}
+function del_evt(id_event){
+	if(confirm("Valider l'action..."))$.post('../api/ajax/evt_delete', {token: $('#token').val(), id_evt: id_event}, function(d){window.location.reload();});
+}
+function cp_evt(id_event)
+{
+	popup("<h3>Copier un événement avec inscription</h3>\
+	<form onsubmit='return false'>\
+	<label>Date (non modifiable par la suite !)</label>\
+	<input style='width:48%; display:inline;' type='text' id='event_deb' placeholder='Date limite inscription' />\
+	\
+	<input style='width:48%; display:inline;' type='text' id='event_fin' placeholder='Date événement' />\
+	<br /><button style='float:right' onclick='valide_cp_evt("+id_event+");' id='valide_btn'>Suivant</button><button style='float:right' id='valide_btn_load'>Chargement...</button>");
+
+	$('#nom_event').focus();
+	$.timepicker.setDefaults($.timepicker.regional['fr']);
+	var startDateTextBox = $('#event_deb');
+	var endDateTextBox = $('#event_fin');
+
+	startDateTextBox.datetimepicker({ 
+		regional: 'fr',
+		dateFormat: "yy-mm-dd",
+		firstDay: 1,
+		controlType: 'select',
+		stepMinute: 1,
+		numberOfMonths: 1,
+		minDate: new Date(),
+		oneLine: true,
+		onClose: function(dateText, inst) {
+			if (endDateTextBox.val() != '') {
+				var testStartDate = startDateTextBox.datetimepicker('getDate');
+				var testEndDate = endDateTextBox.datetimepicker('getDate');
+				if (testStartDate > testEndDate)
+					endDateTextBox.datetimepicker('setDate', testStartDate);
+			}
+			else {
+				endDateTextBox.val(dateText);
+			}
+		},
+		onSelect: function (selectedDateTime){
+			endDateTextBox.datetimepicker('option', 'minDate', startDateTextBox.datetimepicker('getDate') );
+		}
+	});
+	endDateTextBox.datetimepicker({ 
+		controlType: 'select',
+		dateFormat: "yy-mm-dd",
+		stepMinute: 1,
+		numberOfMonths: 1,
+		firstDay: 1,
+		minDate: new Date(),
+		oneLine: true,
+		onClose: function(dateText, inst) {
+			if (startDateTextBox.val() != '') {
+				var testStartDate = startDateTextBox.datetimepicker('getDate');
+				var testEndDate = endDateTextBox.datetimepicker('getDate');
+				if (testStartDate > testEndDate)
+					startDateTextBox.datetimepicker('setDate', testEndDate);
+			}
+			else {
+				startDateTextBox.val(dateText);
+			}
+		},
+		onSelect: function (selectedDateTime){
+			startDateTextBox.datetimepicker('option', 'maxDate', endDateTextBox.datetimepicker('getDate') );
+		}
+	});
+	$('#valide_btn_load').hide();
+
+}
 
 
 function add_evt(id_club)
@@ -642,7 +747,7 @@ function add_evt(id_club)
 	<label>Paiement par carte BDE autorisé</label>\
 	<input type='radio' id='carte_bde_event' name='carte_bde_event' value='0' checked />Non\
 	<input type='radio' id='carte_bde_event_true' name='carte_bde_event' value='1' />Oui\
-	<label>Date</label>\
+	<label>Date (non modifiable par la suite !)</label>\
 	<input style='width:48%; display:inline;' type='text' id='event_deb' placeholder='Date limite inscription' />\
 	\
 	<input style='width:48%; display:inline;' type='text' id='event_fin' placeholder='Date événement' />\
@@ -864,6 +969,10 @@ function valide_commande(id_evt)
 			other = 1;
 			other_name = $('#other_name').val();
 		}
+		else if(document.getElementById('other_bde') && $('#other_bde').is(':checked')){
+			other = 2;
+			other_name = $('#other_carte').val();
+		}
 		else{
 			other = 0;
 			other_name = "";
@@ -880,7 +989,10 @@ function valide_commande(id_evt)
 				fin_load();
 				popup("<h3>Erreur !</h3><pre>"+reponse.error_msg+"</pre>");
 			}
-			else window.location.reload();
+			else {
+				fin_load();
+				popup_force_actualise("L'inscription est bien prise en compte !")
+			}
 		});
 	});
 }
@@ -940,6 +1052,79 @@ function annuler_cmd_club(id){
 		});
 	}
 }
+function evt_encaisse_bde(id_event){
+    if(confirm("Valider l'encaissement de toutes les cartes")){
+	load();
+	$.post('../api/ajax/evt_encaisser', {token:$('#token').val(),mode:'event', id_evt:id_event}, function(d){
+	    window.location.reload();
+	});
+    }
+}
+
+function evt_get_stats(id_event){
+	popup("Chargement...");
+	$.getJSON("../api/ajax/evt_get_stats", {token: $('#token').val(), id_evt: id_event}, function(data){
+		html = "<h3>Statistiques</h3>Argent encaissé par carte BDE: " +  data.total_gain_bde + "€<br>";
+		html+= "Argent généré au total: " + data.total_gain + "€";
+		
+		html+= "<table><tr><td>Nom</td><td>Qté</td><td>Total</td></tr>";
+	
+		for(i=0;i<data.taille_liste;i++){
+			html+="<tr><td>"+data.liste[i].nom_article+"</td><td>"+data.liste[i].qte+"</td><td>"+data.liste[i].gain+"€</td>";
+		}
+
+		html += "</table>";
+
+		popup(html);
+	});
+}
+
+function evt_change_settings(id_event){
+	html = "<h3>Paramètres (cliquer pour modifier)</h3>\
+				Nom de l'événement: <span id='change_nom' onclick='evt_change_nom("+id_event+")'>Chargement...</span><br />\
+				Date limite inscription (non modifiable): <span id='change_date_lim'>Chargement...</span><br />\
+				Date événement (non modifiable): <span id='change_date_evt'>Chargement...</span><br />\
+				Paiement par carte BDE autorisé: <span id='change_carte'  onclick='evt_change_bde("+id_event+")'>Chargement...</span><br />\
+				Places disponibles: <span id='change_places' onclick='evt_change_places("+id_event+")'>Chargement...</span><br />\
+				<em>La sauvegarde est automatique</em>";
+	popup(html);
+
+	$.getJSON("../api/ajax/get_evt", {token: $('#token').val(), id_evt: id_event}, function(data){
+		$('#change_nom').html(data.nom);
+		$('#change_date_lim').html(data.date_insc);
+		$('#change_date_evt').html(data.date_evt);
+		if(data.carte_bde == '1')$('#change_carte').html("Oui");
+		else $('#change_carte').html("Non");
+		$('#change_places').html(data.places);
+	});
+
+}
+function evt_change_nom(id_event){
+	nom = prompt("Nouveau nom: ");
+	if(nom != undefined) if(nom != '') {
+		$('#change_nom').html(nom);
+		$.post("../api/ajax/evt_change_settings", {token: $('#token').val(), mode: 'nom', val: nom, id_evt: id_event});
+	}
+}
+function evt_change_places(id_event){
+	nom = prompt("Nombre de places (0= infini, arrondi si non entier): ");
+	nom = parseInt(nom, 10);
+	if(nom || nom==0) {
+		$('#change_places').html(nom);
+		$.post("../api/ajax/evt_change_settings", {token: $('#token').val(), mode: 'places', val: nom, id_evt: id_event});
+	}
+}
+
+function evt_change_bde(id_event){
+	if(confirm("Autoriser le paiement par carte BDE ?\nATTENTION: si des cartes BDE on déjà été débitées celle-ci resterons débitées")) {
+		$('#change_carte').html("Oui");
+		$.post("../api/ajax/evt_change_settings", {token: $('#token').val(), mode: 'carte', val: 1, id_evt: id_event});
+	}else {
+		$('#change_carte').html("Non");
+		$.post("../api/ajax/evt_change_settings", {token: $('#token').val(), mode: 'carte', val: 0, id_evt: id_event});
+	}
+}
+
 
 
 $(document).ready(function(){
@@ -1003,6 +1188,47 @@ $(document).ready(function(){
 			}
 			else cherche_carte();
 });
+
+		$("#other_carte").keyup(function(e)
+		{
+			if(e.keyCode=="40")//BAS
+
+			{
+			$('#index_cherche').val(parseInt($('#index_cherche').val()) + 1 );
+			if(parseInt($('#index_cherche').val())>$(".nom_recherche").length-1)$('#index_cherche').val(0);
+			$( ".nom_recherche" ).each(function( index ) {
+				if(index == parseInt($('#index_cherche').val())) $( this ).addClass("active");
+				   else $(this).removeClass("active");
+			});
+			}
+			else if(e.keyCode==38)//HAUT
+			{
+				$('#index_cherche').val(parseInt($('#index_cherche').val()) - 1 );
+					if(parseInt($('#index_cherche').val())<0)$('#index_cherche').val(0);
+				$( ".nom_recherche" ).each(function( index ) {
+						if(index == parseInt($('#index_cherche').val())) $( this ).addClass("active");
+					else $(this).removeClass("active");
+					});
+
+			}
+			else if(e.keyCode==13)//ENTER
+			{
+				e.preventDefault();
+				if($.isNumeric($('#other_carte').val()))
+						return false
+				$( ".nom_recherche" ).each(function( index ) {
+					found = 0;
+					if($(this).hasClass("active")){
+						$('#other_carte').val($(this).text());
+						cherche_carte_other();
+						found = 1;
+					}			
+				});
+				return false;
+			}
+			else cherche_carte_other();
+});
+
 
 });
 
