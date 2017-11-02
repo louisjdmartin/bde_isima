@@ -16,7 +16,7 @@
 
 function cherche_carte($settings, $objets){
 	$bdd = $objets['bdd'];	
-	if(!isset($objets['user_info']['autorisations']['bde']))return (array("error" => 1, "msg" => "Action refusée"));
+	if(!isset($objets['user_info']['autorisations']['club']))return (array("error" => 1, "msg" => "Action refusée"));
 	$conditions = "nom LIKE '%%'";
 	
 	$mots = explode(" ",$settings['q']);
@@ -25,6 +25,8 @@ function cherche_carte($settings, $objets){
 		$conditions .= "AND (nom LIKE '%".addslashes($mot)."%' OR prenom LIKE '%".addslashes($mot)."%' OR surnom LIKE '%".addslashes($mot)."%' OR numero LIKE '%".addslashes($mot)."%') ";
 	}
 	
+	if(is_numeric($settings['q']))$conditions = "numero = ".$settings['q'];	
+
 	$resultats = $bdd->query("SELECT nom, prenom, surnom, numero, solde FROM membres WHERE ".$conditions);
 	$retour = array();
 	$retour["nb_elt"]=0;

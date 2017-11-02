@@ -1592,3 +1592,4 @@
 		body.is-loading #footer {
 			opacity: 0;
 		}
+		table.overflowtable  tr td{min-width:64px;margin:16px;}
