@@ -148,7 +148,7 @@ function cherche_carte_other(){
 	if(xhr)xhr.abort();
 	q = $('#other_carte').val();
 	html = "<input type='hidden' value='-1' id='index_cherche' />";
-	if(q.length > 0)xhr = $.getJSON('../api/ajax/cherche_carte', {q:q, token:$('#token').val()}).done(function(data){
+	if(q.length > 0)xhr = $.getJSON('../api/ajax/cherche_carte', {q:q, token:$('#token').val(), force_number:1}).done(function(data){
 		for(i=0;i<data.nb_elt;i++){
 		    html = html + "<span class='nom_recherche' onclick='$(\"#other_carte\").val("+data.liste[i].carte+");cherche_carte_other();'>"  + data.liste[i].nom+' '+data.liste[i].prenom+' '+data.liste[i].surnom+' ('+data.liste[i].carte +') <strong>'+data.liste[i].solde+'€</strong></span>';
 		}

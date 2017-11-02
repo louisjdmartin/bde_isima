@@ -25,7 +25,7 @@ function cherche_carte($settings, $objets){
 		$conditions .= "AND (nom LIKE '%".addslashes($mot)."%' OR prenom LIKE '%".addslashes($mot)."%' OR surnom LIKE '%".addslashes($mot)."%' OR numero LIKE '%".addslashes($mot)."%') ";
 	}
 	
-	if(is_numeric($settings['q']))$conditions = "numero = ".$settings['q'];	
+	if(is_numeric($settings['q']) and isset($settings['force_number']))$conditions = "numero = ".$settings['q'];	
 
 	$resultats = $bdd->query("SELECT nom, prenom, surnom, numero, solde FROM membres WHERE ".$conditions);
 	$retour = array();
