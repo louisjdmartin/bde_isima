@@ -10,6 +10,7 @@
 			nom_membre_record
 			record
 			score_actuel
+			classement
 		]
 		
 	AUTORISATION:
@@ -36,13 +37,17 @@ function high_score($settings, $objets){
 	
 		$record = $infos_record['score'];
 		$nom_membre_record = $infos_record['nom']." ".$infos_record['prenom'];
+		$avant_moi = $bdd->query("SELECT COUNT(*) AS score FROM membres, transactions, articles WHERE articles.id=transactions.id_article AND membres.id=transactions.id_personne AND articles.id=".$a['id']." GROUP BY id_personne, transactions.id_article HAVING score>".$score_actuel);
 
+		$classement=1;
+		foreach($avant_moi as $aaa)$classement++;
 
 		$scores[] = array(
 			"nom_art" => utf8_encode($a['nom']),
 			"nom_membre_record" => $nom_membre_record,
 			"record" => $record,
-			"score_actuel" => $score_actuel
+			"score_actuel" => $score_actuel,
+			"classement" => $classement
 		);	
 	}
 	return $scores;
