@@ -19,7 +19,8 @@
 		"edit_news" => "Gestion des news",
 		"evenement_inscription" => "Gestion des formulaires d'inscriptions",
 		"evenement_inscription_edit" => "Gérer des inscriptions",
-		"inscription" => "Inscrivez vous !"
+		"inscription" => "Inscrivez vous !",
+		"records" => "Tableau des records du BDE"
 	);
 	
 	if(isset($_GET['token']))

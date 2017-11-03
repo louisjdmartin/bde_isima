@@ -19,6 +19,7 @@
 						<li><a href="carte">Carte BDE</a></li>
 						<li><a href="solde_isibouffe">Carte ISIBOUFFE</a></li>
 						<li><a href="inscription">S'inscrire à un événement</a></li>
+						<li><a href="records">Records du BDE</a></li>
 						<li><a href="articlesbde">Articles en vente au BDE</a>
 						<li><a href="calendrier">Calendrier</a></li>
 						<li><a href="annales">Annales</a></li>
