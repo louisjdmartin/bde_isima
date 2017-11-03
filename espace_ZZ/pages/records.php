@@ -1,6 +1,6 @@
 <?php
 	$scores = api("high_score", array("token" => $_SESSION['token']));
-	echo "<div style='overflow-x:auto;'><table class='overflowtable'>>";
+	echo "<div style='overflow-x:auto;'><table class='overflowtable'>";
 	echo "<tr>
 		<td>Article</td>
 		<td>Record</td>
