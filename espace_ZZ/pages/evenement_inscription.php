@@ -22,7 +22,7 @@
 			<a class='button' href='./evenement_inscription'>Changer de club</a>
 			<a class='button' onclick='add_evt(<?= $id; ?>)'>Ajouter un événement avec inscription</a>
 			
-			<br />todo: copie/gestion articles/incription (membre+club)/edit/voir inscrits
+			
 		<?php
 		
 		$evt = api("get_liste_evt", array("token"=>$_SESSION['token'],"id_club"=>$id));
