@@ -30,7 +30,7 @@ function evt_get_liste_inscrits($settings, $objets){
 										FROM  `evt_commandes` , membres, evt_articles
 										WHERE evt_commandes.id_membre = membres.id
 										AND evt_commandes.id_article = evt_articles.id
-										AND id_event =".$settings['id_evt']." ORDER BY id");
+										AND id_event =".$settings['id_evt']." ORDER BY membres.prenom");
 		
 		foreach($liste_inscrit as $l){
 			$liste[] = array(
