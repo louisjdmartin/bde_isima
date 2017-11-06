@@ -15,7 +15,7 @@
 <a class='button' onclick='evt_encaisse_bde(<?= $_GET['id']; ?>)'>Encaisser les cartes BDE</a>
 <a class='button' onclick='evt_edit_article(<?= $_GET['id']; ?>)'>Modifier les articles</a>
 <a class='button' onclick='evt_get_stats(<?= $_GET['id']; ?>)'>Statistiques</a>
-
+<a class='button' href='assets/php/print_evt.php?id=<?= $_GET['id']; ?>&token=<?= $_SESSION['token'];?>'>Imprimer</a>
 
 <?php
 
