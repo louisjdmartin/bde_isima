@@ -2,7 +2,7 @@
 require '../../../api/api.php';
 $liste = api("evt_get_liste_inscrits", array("token" => $_GET['token'], "id_evt" => $_GET['id']));
 echo "<body onload='window.print()'><meta charset='utf-8'>
-<style>tr,td,table{border-collapse:collapse;border:1px solid black; padding:16px;}</style>
+<style>tr,td,table{border-collapse:collapse;border:1px solid black; padding:4px;}</style>
 <table style='width:100%'> <tr>
                         <td>#</td>
                         <td>Nom</td>
