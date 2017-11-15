@@ -76,6 +76,19 @@
 		
 		//On execute
 		$retour =  $fonction($settings, $objets);
+		
+
+		/*Génération des logs*/
+		$filename=realpath(dirname(__FILE__))."/logs/".date('Y-m').".txt";
+		
+		if(isset($settings['token']))$settings['token']='***';
+		
+		if(!in_array($fonction,array("get_club", "get_news", "get_liste_partenaires", "get_liste_clubs")))
+		  {
+		    if(!is_file($filename))file_put_contents($filename, "");
+		    file_put_contents($filename, "[".date('Y-m-d h:i:s')."] UserID#".$objets['user_info']['uti_id']." function ".$fonction." ".(isset($objets['user_info']['autorisations']['club']) ? "[club]":"").(isset($objets['user_info']['autorisations']['bde']) ? "[BDE]":"")." \n", FILE_APPEND);
+		    if(isset($retour['error']) && $retour['error']==1 && $fonction!="genere_token" && $fonction!= "change_passwd")file_put_contents($filename, "[ERROR] ".json_encode($settings).json_encode($retour)."\n", FILE_APPEND);
+		  }
 		return $retour;	
 	}
 	
