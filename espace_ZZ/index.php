@@ -34,7 +34,11 @@
 	
 	if(empty($_SESSION['token']))
 	{
-		header('location:../#zz');
+		if(empty($_GET['id'])){
+			if(empty($_GET['page']))$_GET['page']='carte';
+			header('location:../?from='.$_GET['page'].'#zz');
+		}
+		else header('location:../?from='.$_GET['page'].'.'.$_GET['id'].'#zz');
 		die();
 	}
 	$user = authentification($_SESSION['token']);
@@ -60,9 +64,10 @@
 	
 	
 	if(!isset($pages[$_GET['page']])){
-		if(isset($_GET['from']) && $_GET['from']=='planning_maker'){header('location:../planning_maker');die();}
-		if(isset($_GET['from']) && $_GET['from']=='change_pwd'){header('location:./?page=change_pwd&token_pwd='.$_GET['token']);die();}
-	    header('location:./carte');
+		     if(isset($_GET['from']) && $_GET['from']=='planning_maker'){header('location:../planning_maker');die();}
+		else if(isset($_GET['from']) && $_GET['from']=='change_pwd'){header('location:./?page=change_pwd&token_pwd='.$_GET['token']);die();}
+		else if(isset($_GET['from'])) {header('location:./'.$_GET['from']);die();}
+	    else header('location:./carte');
 		die();
 	}
 	else

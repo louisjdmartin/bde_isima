@@ -28,8 +28,7 @@ function identification(from)
 		{
 			$('#ok').show();
 			$('#form').hide();
-			if(true)window.location="./espace_ZZ?token="+data.token+"&from="+from+"&expiration="+n;
-			else window.location="./espace_ZZ?token="+data.token+"&from="+from+"&no_cookie=true";
+			window.location="./espace_ZZ?token="+data.token+"&from="+from+"&expiration="+n;
 		}
 	});
 }
