@@ -1,6 +1,6 @@
 <?php
 require '../../../api/api.php';
-$liste = api("evt_get_liste_inscrits", array("token" => $_GET['token'], "id_evt" => $_GET['id']));
+$liste = api("evt_get_liste_inscrits", array("token" => $_GET['token'], "id_evt" => $_GET['id'], "order" => $_GET['order']));
 echo "<body onload='window.print()'><meta charset='utf-8'>
 <style>tr,td,table{border-collapse:collapse;border:1px solid black; padding:4px;}</style>
 <table style='width:100%'> <tr>
