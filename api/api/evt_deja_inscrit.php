@@ -24,7 +24,10 @@ function evt_deja_inscrit($settings, $objets){
 	$commandes = $bdd->query("SELECT nom, prix, qte, commentaire FROM evt_commandes, evt_articles WHERE evt_commandes.id_article = evt_articles.id AND nom_membre ='' AND evt_commandes.id_event=".$settings['id_evt']." AND id_membre=".$objets['user_info']['uti_id']."");
 	foreach($commandes as $a){
 		$bool=true;
-		$liste[] = $a;
+		$liste[] = array("nom" => utf8_encode($a['nom']),
+				 "prix" => $a['prix'],
+				 "qte" => $a['qte'],
+				 "commentaire" => utf8_encode(htmlentities($a['commentaire'])));
 	}	
 	
 	return array("bool" => $bool, "liste" => $liste);

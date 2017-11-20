@@ -44,7 +44,7 @@ function evt_get_stats($settings, $objets){
 	$taille_liste = 0;
 	foreach($liste_commandes as $commande){
 		$liste[] = array(
-			"nom_article" => $commande['nom'],
+				 "nom_article" => utf8_encode($commande['nom']),
 			"qte" => $commande['qte'],
 			"gain" => $commande['gain']
 		);
