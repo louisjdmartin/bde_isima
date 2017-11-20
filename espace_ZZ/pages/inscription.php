@@ -126,7 +126,7 @@
 							<input type='text' name='other_carte' id='other_carte' onkeyup="cherche_carte()" placeholder='Saisir un numéro de carte ou chercher un nom' />
 							<div id="resultats"></div>
 
-						</div>
+						</div><div style='height:64px'></div>
 
 						<hr />
 
