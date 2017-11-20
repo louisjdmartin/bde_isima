@@ -44,7 +44,7 @@ function evt_get_liste_inscrits($settings, $objets){
 				"qte_paye" => $l['qte_paye'],
 				"nom_membre" => utf8_encode($l['nom_membre']),
 				"nom_article" => utf8_encode($l['nom_article']),
-				"commentaire" => utf8_encode($l['commentaire']),
+				"commentaire" => utf8_encode(htmlentities($l['commentaire'])),
 				"nom" => utf8_encode($l['nom']),
 				"prenom" => utf8_encode($l['prenom']),
 				"surnom" => utf8_encode($l['surnom'])
