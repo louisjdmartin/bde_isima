@@ -1,4 +1,6 @@
-<?php function scanner($dir){
+<?php 
+header("location:https://drive.google.com/drive/folders/0B8UQ_-N6TCbvRDZEcUtTS1hWc2M?usp=sharing");die();
+function scanner($dir){
     $files = scandir($dir);
     foreach($files as $file){
             $files_infos = explode('.', $file);
