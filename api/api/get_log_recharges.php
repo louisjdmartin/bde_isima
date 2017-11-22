@@ -27,7 +27,7 @@ function get_log_recharges($settings, $objets){
 	if($objets['user_info']['uti_id']!=NULL and !isset($settings['numero']))
 	{
 		$recharges = $bdd->query("SELECT montant, timestamp FROM logs_solde WHERE id_membre=".$objets['user_info']['uti_id']." ORDER BY timestamp DESC LIMIT 0, $limit");
-	}else if(isset($settings['numero']))
+	}else if(isset($settings['numero']) and isset($objets['user_info']['autorisations']['bde']))
 	{
 		$recharges = $bdd->query("SELECT montant, timestamp FROM logs_solde JOIN membres WHERE logs_solde.id_membre= membres.id AND membres.numero = ".$settings['numero']." ORDER BY timestamp DESC LIMIT 0, $limit");
 	}
