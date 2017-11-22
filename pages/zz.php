@@ -26,7 +26,7 @@
 	<ul class="actions">
 		<li><a href="#oubli">Mot de passe oublié ?</a></li>
 		<li><a href="#create_account">Pas de compte ?</a></li>
-		<li><a href="./espace_ZZ/pages/file.php">Annales</a></li>
+		<li><a href="https://drive.google.com/drive/folders/0B8UQ_-N6TCbvRDZEcUtTS1hWc2M?usp=sharing">Annales</a></li>
 	</ul>
 </form>
 <div class="field" id='ok' style='display:none;'>
