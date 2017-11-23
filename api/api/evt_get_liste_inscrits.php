@@ -23,7 +23,6 @@ function evt_get_liste_inscrits($settings, $objets){
 	$evt = $bdd->query("SELECT id_club FROM evt_evenements WHERE id='".addslashes($settings['id_evt'])."' ORDER BY date_event DESC");
 	$id_club=-1;
 	foreach($evt as $e)$id_club=$e['id_club'];
-	
 	if($id_club!=-1 AND club_autorise($id_club, $objets['user_info'])){
 		$liste = array();
 		$orderby = "membres.prenom";
@@ -44,7 +43,7 @@ function evt_get_liste_inscrits($settings, $objets){
 				"qte_paye" => $l['qte_paye'],
 				"nom_membre" => utf8_encode($l['nom_membre']),
 				"nom_article" => utf8_encode($l['nom_article']),
-				"commentaire" => utf8_encode(htmlentities($l['commentaire'])),
+				"commentaire" => htmlentities(utf8_encode($l['commentaire'])),
 				"nom" => utf8_encode($l['nom']),
 				"prenom" => utf8_encode($l['prenom']),
 				"surnom" => utf8_encode($l['surnom'])
