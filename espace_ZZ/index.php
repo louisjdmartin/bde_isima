@@ -115,6 +115,8 @@
 		<meta name="msapplication-TileColor" content="#ffffff">
 		<meta name="msapplication-TileImage" content="/ico/ms-icon-144x144.png">
 		<meta name="theme-color" content="#ffffff">
+		
+
 	</head>
 	<body class="no-sidebar">
 		<div id="page-wrapper">
@@ -137,7 +139,7 @@
 				<div id="fond_popup"></div>
 				<div id="popup"></div>
 				<div id="fond_load"></div>
-				<div id="load"><h3>Traitement en cours...</h3><p>Merci de patienter...</p></div>
+				<div id="load"><h3>Traitement en cours...</h3><p>Merci de patienter...</p><?php if(troll_mode($user)) echo "<center class='gif_load'></center>"; ?></div>
 				<div id="fin_load"><h3>Traitement terminé</h3><p id="fin_load_msg">&nbsp;</p></div>
 				<div id="close_popup">X</div>
 				<input id="token" type="hidden" value="<?= $_SESSION['token']; ?>" />
@@ -167,7 +169,21 @@
 							<div class="12u">
 								<div id="copyright">
 									<ul class="menu">
-										<li>© BDE ISIMA, Design: <a href="http://html5up.net">HTML5 UP</a><br />Créé par BDE BliZZard</li>
+										<li>
+											© BDE ISIMA, Design: <a href="http://html5up.net">HTML5 UP</a>
+											<br />Créé par BDE BliZZard
+											<?php if(troll_mode($user)){
+												echo "<br>Le BDE BliZZard décline toute responsabilitée en cas de dysfonctionnement sur les comptes listeux.";
+												echo "<br>Le BDE BliZZard décline toute responsabilitée en cas de dysfonctionnement le premier avril.";
+												echo "<br>Le BDE BliZZard espère que le site vous plaît.";
+												echo "<br>Le saviez vous ? Vous avez une chance sur 42 d'être converti par un prêtre bleu ou rouge.";
+												echo "<br>Le saviez vous ? Vous avez une chance sur 42 d'être la tête à l'envers.";
+												echo "<br>Le saviez vous ? Le temps de chargement moyen de l'API est de 100ms, sauf aujourd'hui où celui-ci est de 4s.";
+												echo "<br>COGO EVERYWHERE";
+												echo "<br>Le saviez vous ? C'était mieux avant !";
+											} ?>
+										</li>
+										
 									</ul>
 								</div>
 							</div>
@@ -175,5 +191,36 @@
 					</footer>
 				</div>
 	</body>
+	<?php
+		if(troll_mode($user)){
+			echo "
+				<style>
+					#header-wrapper{
+						background: url('../easter_eggs/cogonixkill/".rand(1,9).".jpg');
+						background-size: auto 280px;
+						background-attachment: fixed;
+					}
+				</style>
+				<script>
+					function getRandomInt(min, max) {
+						  min = Math.ceil(min);
+						  max = Math.floor(max);
+						  return Math.floor(Math.random() * (max - min)) + min;
+					}
+					if(getRandomInt(1,42)==4){
+						$('#main-wrapper').append('<audio src=\"../easter_eggs/wololo.mp3\" autoplay></audio>');
+						$('*').css({'transition':'background 2s'});
+						if(getRandomInt(1,3)==1)setTimeout(\"$('*').css({'background':'blue'});\",700);
+						else setTimeout(\"$('*').css({'background':'red'});\",700);
+					}
+					if(getRandomInt(1,42)==28){
+						$('body').css({'transition':'transform 2s'});
+						$('body').css({'transform':'rotate(180deg)'});
+					}
+				</script>
+			";
+		}
+		
+	?>
 </html>
 	<?php } ?>

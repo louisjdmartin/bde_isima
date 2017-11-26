@@ -1,4 +1,10 @@
 <?php
+	function troll_mode($user=array()){
+		if(isset($user['user_info']['autorisations']['listeux']))return true;
+		if(isset($user['autorisations']['listeux']))return true;
+		if(date("m-d") == "04-01") return true;
+		return false;
+	}
 	function date_joli($time)
 	{
 		$mois = array(NULL, "jan.", "fev.", "mars", "avril", "mai", "juin", "juil.", "aout", "sept.", "oct.", "nov.", "dec.");
@@ -40,6 +46,7 @@
 			 if($g==0) return "ZZ";
 		else if($g==1) return "Club";
 		else if($g==2) return "BDE";
+		else if($g==3) return "Listeux";
 		else 		   return "Grade non défini: $g";
 	}
 	function annee_scolaire()
