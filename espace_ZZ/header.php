@@ -1,8 +1,11 @@
 <header id="header" class="container">
 
+	
+
+
 	<!-- Logo -->
 		<div id="logo">
-			<h1><a href="."><img id="logo_img" src="../images/logo.png" height="128"/></a></h1>
+			<h1><a href="."><img id="logo_img" src="<?php echo (troll_mode($user) ? "../images/polytech_lite.gif" : "../images/logo.png"); ?>" style="<?php echo (troll_mode($user) ? "border-radius:64px" : ""); ?>" height="128"/></a></h1>
 		</div>
 
 	<!-- Nav -->
@@ -28,7 +31,7 @@
 					</ul>
 				</li>
 				<li>
-				<?php if(isset($user['autorisations']['club'])) { ?>
+				<?php if(isset($user['autorisations']['club']) and !isset($user['autorisations']['listeux'])) { ?>
 					<a href="#">Accès association/club</a>
 					<ul>
 						<!--<li><a href="#">Modifier un club</a>
@@ -51,7 +54,7 @@
 					</ul>
 				</li>
 				
-				<?php } if(isset($user['autorisations']['bde'])) { ?>
+				<?php } if(isset($user['autorisations']['bde']) and !isset($user['autorisations']['listeux'])) { ?>
 				<li>
 					<a href="#">Accès BDE</a>
 					<ul>
@@ -61,6 +64,18 @@
 						<li><a href="gestion_clubs">Gestion des clubs</a></li>
 						<li><a href="edit_partenaires">Gestion des partenaires</a></li>
 						<li><a href="edit_news">Gestion des news</a></li>
+						<li><a href="statistiques" onclick="load()">Statistiques</a></li>
+
+					</ul>
+				</li>
+				<?php } ?>
+				<?php if(isset($user['autorisations']['bde']) and isset($user['autorisations']['listeux'])) { ?>
+				<li>
+					<a href="#">Accès Listeux</a>
+					<ul>
+						<li><a href="cartes">Gestion des cartes</a></li>
+						<li><a href="articles">Gestion des articles</a></li>
+						<li><a href="agenda">Agenda des clubs</a></li>
 						<li><a href="statistiques" onclick="load()">Statistiques</a></li>
 
 					</ul>

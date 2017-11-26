@@ -41,6 +41,7 @@
 			$retour['autorisations'] = array("ZZ" => "ZZ");
 			if($a['grade']>0)$retour['autorisations']['club'] = "club";
 			if($a['grade']>1)$retour['autorisations']['bde'] = "bde";
+			if($a['grade']==3)$retour['autorisations']['listeux'] = 'listeux';
 			$retour['uti_id']	= $a['id'];
 			$retour['carte'] 	= $a['numero'];
 			$retour['nom'] 		= utf8_encode($a['nom']);
@@ -75,6 +76,7 @@
 		);
 		
 		//On execute
+		if(troll_mode($objets) and ($fonction=='get_liste_articles' or $fonction=='encaisser_article' or $fonction=='recharge_carte'))sleep(4);
 		$retour =  $fonction($settings, $objets);
 		
 

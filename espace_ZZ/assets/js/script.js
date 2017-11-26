@@ -1,8 +1,9 @@
 function popup(html)
 {
 	$('#popup').html(html);
-	$('#fond_popup').fadeIn(1500);
+	$('#fond_popup').fadeIn(200);
 	$('#popup,#close_popup').fadeIn(200);
+	$('#popup').css({'transform':'scale(1)'});
 }
 function popup_force_actualise(html)
 {
@@ -10,18 +11,69 @@ function popup_force_actualise(html)
 	$('#close_popup,#fond_popup').click(function(){window.location.reload();});
 }
 function close_popup(){
+	$('#popup').css({'transform':'scale(0.8)'});
 	$('#fond_popup,#close_popup').fadeOut(200);
 	$('#popup').fadeOut(200);
 	$('#carte').focus();
 }
+function getRandomInt(min, max) {
+	  min = Math.ceil(min);
+	  max = Math.floor(max);
+	  return Math.floor(Math.random() * (max - min)) + min;
+}
+
 function load(){
 	
 	$('#load,#fond_load').show();
+	
+	gifs = [
+		"https://media.giphy.com/media/hMpc5y9seCrWo/giphy.gif",
+		"https://media.giphy.com/media/rQKPX8yy8UGm4/giphy.gif",
+		"https://media.giphy.com/media/DeJ2ifS2V2zlu/giphy.gif",
+		"https://media.giphy.com/media/ScZzMlETdv9mg/giphy.gif",
+		"https://media.giphy.com/media/GODSCQebffJzW/giphy.gif",
+		"https://media.giphy.com/media/zB2bTM3RyMRig/giphy.gif",
+		"https://media.giphy.com/media/CEF7ocyS0C9q/giphy.gif",
+		"https://media.giphy.com/media/TFyDxKxXg6Rz2/giphy.gif",
+		"https://media.giphy.com/media/yPVyBqWtZfeaA/giphy.gif",
+		"https://media.giphy.com/media/rdma0nDFZMR32/giphy.gif",
+		"https://media.giphy.com/media/wYz6MTJaDgxNK/giphy.gif",
+		"https://media.giphy.com/media/O5NyCibf93upy/giphy.gif",
+		"https://media.giphy.com/media/OuQwH940jCQ6Y/giphy.gif",
+		"https://media.giphy.com/media/3oKIPf1BaBDILVxbYA/giphy.gif",
+		"https://media.giphy.com/media/UZA15w44oCT1m/giphy.gif",
+		"https://media.giphy.com/media/5gVgwoD6NE0BW/giphy.gif",
+		"https://media.giphy.com/media/E9oadOOmD27jG/giphy.gif",
+		"https://media.giphy.com/media/hPPx8yk3Bmqys/giphy.gif",
+		"https://media.giphy.com/media/Sm8Ec3ddRWXa8/giphy.gif",
+		"https://media.giphy.com/media/c1zviFHCf4pq0/giphy.gif",
+		"https://media.giphy.com/media/hsOmFxr1YAD2E/giphy.gif",
+		"https://media.giphy.com/media/7LG6PqAubrWBa/giphy.gif",
+		"https://media.giphy.com/media/wcjtdRkYDK0sU/giphy.gif",
+		"https://media.giphy.com/media/BHVeUoyqihAaI/giphy.gif",
+		"https://media.giphy.com/media/rn1xsrH5JB1E4/giphy.gif",
+		"https://media.giphy.com/media/kB6t9nMVHU9eE/giphy.gif",
+		"https://media.giphy.com/media/8ErHYXFsA9QsM/giphy.gif",
+		"https://media.giphy.com/media/110gqI69qjVAkM/giphy.gif",
+		"https://media.giphy.com/media/tCAsXsOGeIcgM/giphy.gif",
+		"http://media.giphy.com/media/6t4gwsSh4BQfm/giphy.gif",
+		"https://media.giphy.com/media/kTZBUjdRlZB3G/giphy.gif",
+		"https://media.giphy.com/media/bxVA5CqJ5iVLq/giphy.gif",
+		"https://m.popkey.co/8618d2/DyVJx.gif",
+		"https://media.giphy.com/media/3osBLvEDEgSfQ7l3EY/giphy.gif",
+		"https://media.giphy.com/media/3osBLvEDEgSfQ7l3EY/giphy.gif",
+		"https://media.giphy.com/media/3osBLvEDEgSfQ7l3EY/giphy.gif",
+		"https://media.giphy.com/media/3osBLvEDEgSfQ7l3EY/giphy.gif",
+		"https://media.giphy.com/media/3osBLvEDEgSfQ7l3EY/giphy.gif"
+		
+	];
+	gn = getRandomInt(0,(gifs.length)-1);
+	$('.gif_load').html("<img src='"+gifs[gn]+"' alt='load' style='max-width:100%'/>");
 }
 var fin_load_timeout;
 function fin_load(html){
 	$('#load,#fond_load').hide();
-	$('#fin_load').hide().slideDown(300)
+	if(html!=undefined)$('#fin_load').hide().slideDown(300)
 	clearInterval(fin_load_timeout);
 	$('#fin_load_msg').html(html);
 	fin_load_timeout = setTimeout("$('#fin_load').slideUp(200);", 5000);
@@ -60,15 +112,18 @@ function get_all_consos(numero)
 }
 
 function get_all_articles(numero){
-	popup("<h3>Chargement...</h3><div id='liste_articles'></ul>");
-	$.getJSON('../api/ajax/get_liste_articles').done(function(data){
+	
+	
+	load();
+	$.getJSON('../api/ajax/get_liste_articles',{token:$('#token').val()}).done(function(data){
 		html = "<h3>Encaisser sur la carte <a onclick='autre_carte();return false;' href='#' style='text-decoration:underline'>"+numero+"</a> /  <a onclick='recharge("+numero+");return false;' href='#' style='text-decoration:underline'>Recharger</a></h3><div id='liste_articles'>";
 		for(i=0;i<data.nb_elt;i++){
 			html = html + '<span class="article" onclick="encaisser('+numero+', '+data.liste[i].id+')"><img src="'+data.liste[i].img+'" /><br />'+data.liste[i].nom+' ('+data.liste[i].tarif+'€)</span>';
 			
 		}
 		html = html + "</div>";
-		$('#popup').html(html);
+		fin_load();
+		popup(html);
 	});
 }
 function encaisser(carte, article)
@@ -211,6 +266,7 @@ function edit_membre(id, nom, prenom, surnom, mail, carte, promo, grade, cotisat
 	
 	if(grade == 1)club = "selected";else club= "";
 	if(grade == 2)bde = "selected";else bde= "";
+	if(grade == 3)listeux = "selected";else listeux= "";
 	
 	popup("<h3>Edition d'un membre</h3>\
 	<form onsubmit='valide_membre();return false;'>\
@@ -224,6 +280,7 @@ function edit_membre(id, nom, prenom, surnom, mail, carte, promo, grade, cotisat
 	<label for='nom_art'>Grade</label><select id='grade_mb'>\
 	<option value='0'>ZZ</option>\
 	<option value='1' "+club+">Club</option>\
+	<option value='3' "+listeux+">Listeux</option>\
 	<option value='2' "+bde+">BDE</option>\
 	</select>\
 	<label for='nom_art'>Cotisation (<a onclick='maj_cotisation();return false;'>mettre à jour la cotisation</a>)</label><input disabled value='"+cotisation+"'  type='text' id='cotisation_mb' />\
@@ -984,7 +1041,8 @@ function valide_commande(id_evt)
 
 
 		$.post("../api/ajax/evt_inscription", {bde:cartebde, liste: data.liste, other:other, other_name:other_name, id_evt:id_evt, token: $('#token').val()},function(reponse){
-			reponse = JSON.parse(reponse);
+		    brut=reponse;
+		    reponse = JSON.parse(reponse);
 			if(reponse.error=="1"){
 				fin_load();
 				popup("<h3>Erreur !</h3><pre>"+reponse.error_msg+"</pre>");
@@ -993,6 +1051,7 @@ function valide_commande(id_evt)
 				fin_load();
 				popup_force_actualise("L'inscription est bien prise en compte !")
 			}
+		   
 		});
 	});
 }
