@@ -2623,6 +2623,11 @@
 		box-shadow: 1px 1px 5px black;
 		max-height: 70%;
 		overflow:auto;
+		transition: transform .2s;
+	}
+	#popup{
+		
+		transform:scale(0.8);
 	}
 	#fin_load{
 		position: fixed;
@@ -2663,6 +2668,9 @@
 		opacity: .2;
 		position:fixed;
 		top:0;left:0;right:0;bottom:0;
+	}
+	#fond_load{
+		opacity:0;
 	}
 	#liste_articles span{
 		display:inline-block;
