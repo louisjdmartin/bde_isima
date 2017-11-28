@@ -27,7 +27,7 @@ function evt_deja_inscrit($settings, $objets){
 		$liste[] = array("nom" => utf8_encode($a['nom']),
 				 "prix" => $a['prix'],
 				 "qte" => $a['qte'],
-				 "commentaire" => utf8_encode(htmlentities($a['commentaire'])));
+				 "commentaire" => htmlentities(utf8_encode($a['commentaire'])));
 	}	
 	
 	return array("bool" => $bool, "liste" => $liste);
