@@ -23,7 +23,7 @@ function get_log_consos($settings, $objets){
 	$bdd = $objets['bdd'];
 	$limit = 10;
 	if(isset($settings['nombre']) AND is_numeric($settings['nombre']))$limit = $settings['nombre'];
-	
+	if(!isset($objets['user_info']['autorisations']['bde']))unset($settings['numero']);
 	if($objets['user_info']['uti_id']!=NULL and !isset($settings['numero']))
 	{
 		$recharges = $bdd->query("SELECT transactions.timestamp, transactions.anciensolde, articles.nom, articles.tarif FROM transactions, articles WHERE transactions.id_personne=".$objets['user_info']['uti_id']." AND articles.id=transactions.id_article ORDER BY transactions.timestamp DESC LIMIT 0, $limit");
