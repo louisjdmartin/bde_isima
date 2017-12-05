@@ -64,7 +64,8 @@ function load(){
 		"https://media.giphy.com/media/3osBLvEDEgSfQ7l3EY/giphy.gif",
 		"https://media.giphy.com/media/3osBLvEDEgSfQ7l3EY/giphy.gif",
 		"https://media.giphy.com/media/3osBLvEDEgSfQ7l3EY/giphy.gif",
-		"https://media.giphy.com/media/3osBLvEDEgSfQ7l3EY/giphy.gif"
+	    "https://media.giphy.com/media/3osBLvEDEgSfQ7l3EY/giphy.gif",
+	    "https://bde.isima.fr/easter_eggs/cogonixkill/10.jpg"
 		
 	];
 	gn = getRandomInt(0,(gifs.length)-1);
