@@ -196,7 +196,7 @@
 			echo "
 				<style>
 					#header-wrapper{
-						background: url('../easter_eggs/cogonixkill/".rand(1,9).".jpg');
+						background: url('../easter_eggs/cogonixkill/".rand(1,10).".jpg');
 						background-size: auto 280px;
 						background-attachment: fixed;
 					}
