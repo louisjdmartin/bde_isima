@@ -264,11 +264,11 @@ function edit_membre(id, nom, prenom, surnom, mail, carte, promo, grade, cotisat
 {
 	if(id==0)efface_button="";
 	else efface_button = "Pour effacer un membre remplace son nom par SUPPR_MEMBER\nATTENTION: le compte ne sera pas effacé si il est associé à un club";
-	
+        super_grade="";disable_super="";
 	if(grade == 1)club = "selected";else club= "";
 	if(grade == 2)bde = "selected";else bde= "";
 	if(grade == 3)listeux = "selected";else listeux= "";
-	
+        if(grade == 4){super_grade="<option value='4' selected>Créateur du site</option>";disable_super="disabled";} 
 	popup("<h3>Edition d'un membre</h3>\
 	<form onsubmit='valide_membre();return false;'>\
 	<input type='hidden' value='"+id+"' id='id_mb' />\
@@ -278,12 +278,12 @@ function edit_membre(id, nom, prenom, surnom, mail, carte, promo, grade, cotisat
 	<label for='nom_art'>Mail</label><input value='"+mail+"'  type='text' id='mail_mb' />\
 	<label for='nom_art'>Carte</label><input value='"+carte+"'  type='text' id='carte_mb' />\
 	<label for='nom_art'>Promo</label><input value='"+promo+"'  type='text' id='promo_mb' />\
-	<label for='nom_art'>Grade</label><select id='grade_mb'>\
+	<label for='nom_art'>Grade</label><select "+disable_super+" id='grade_mb'>\
 	<option value='0'>ZZ</option>\
 	<option value='1' "+club+">Club</option>\
 	<option value='3' "+listeux+">Listeux</option>\
 	<option value='2' "+bde+">BDE</option>\
-	</select>\
+        "+super_grade+"</select>\
 	<label for='nom_art'>Cotisation (<a onclick='maj_cotisation();return false;'>mettre à jour la cotisation</a>)</label><input disabled value='"+cotisation+"'  type='text' id='cotisation_mb' />\
 	\
 	<a style='float:right' class='button' href='#' onclick='valide_membre()'>Sauvegarder</a>&nbsp;\
