@@ -20,7 +20,7 @@ function statistiques_campagnes($settings, $objets){
     $retour['nb_elt']++;
     $recharges = $bdd->query("SELECT SUM(montant) AS r FROM logs_solde WHERE id_membre_bde=".$list['id'])->fetch()['r'];
     $transactions = $bdd->query("SELECT COUNT(*) AS t FROM transactions WHERE id_membre_bde=".$list['id'])->fetch()['t'];
-    $retour['liste'][] = array("nom_listeux" => $list['nom']." ".$list['prenom'], "recharges" => $recharges, "consos" => $transactions);
+    $retour['liste'][] = array("nom_listeux" => $list['nom']." ".$list['prenom'], "recharges" => round($recharges,2), "consos" => $transactions);
   }
   return $retour;
 }
