@@ -65,8 +65,8 @@ function load(){
 		"https://media.giphy.com/media/3osBLvEDEgSfQ7l3EY/giphy.gif",
 		"https://media.giphy.com/media/3osBLvEDEgSfQ7l3EY/giphy.gif",
 	    "https://media.giphy.com/media/3osBLvEDEgSfQ7l3EY/giphy.gif",
-	    "https://bde.isima.fr/easter_eggs/cogonixkill/10.jpg"
-		
+	    "https://bde.isima.fr/easter_eggs/cogonixkill/10.jpg", 
+	    "https://bde.isima.fr/easter_eggs/franck_romane.gif"
 	];
 	gn = getRandomInt(0,(gifs.length)-1);
 	$('.gif_load').html("<img src='"+gifs[gn]+"' alt='load' style='max-width:100%'/>");
