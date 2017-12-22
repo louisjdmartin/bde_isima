@@ -49,7 +49,7 @@
 <?php
 			if(date("m") == '12')echo '
 				<link rel="stylesheet" href="noel/neige.css" />
-				<div class="snow">
+				<div class="snow" style="position:fixed!important">
 				  <div class="snow__layer"><div class="snow__fall"></div></div>
 				  <div class="snow__layer"><div class="snow__fall"></div></div>
 				  <div class="snow__layer">
