@@ -122,12 +122,28 @@
 		<div id="page-wrapper">
 
 			<!-- Header -->
-				<div id="header-wrapper">
+				<div id="header-wrapper" style='position:relative'>
+	<?php if(date("m") == '12')echo '
+				<link rel="stylesheet" href="../noel/neige.css" />
+				<div class="snow" style="z-index:0">
+				  <div class="snow__layer"><div class="snow__fall"></div></div>
+				  <div class="snow__layer"><div class="snow__fall"></div></div>
+				  <div class="snow__layer">
+					<div class="snow__fall"></div>
+					<div class="snow__fall"></div>
+					<div class="snow__fall"></div>
+				  </div>
+				  <div class="snow__layer"><div class="snow__fall"></div></div>
+				</div>
+		
+			';
+		
+		 ?>
 					<?php include "header.php"; ?>
 				</div>
 
 			<!-- Main -->
-				<div id="main-wrapper">
+				<div id="main-wrapper" style='z-index:4'>
 					<div class="container">
 						<div id="content">
 							<?php 

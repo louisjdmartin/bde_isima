@@ -2,10 +2,6 @@ body, html {
   min-height: 100%;
 }
 
-body {
-  background: url("https://bde.isima.fr/images/bg.jpg") center center;
-  background-size: cover;
-}
 
 .snow {
   position: absolute;
