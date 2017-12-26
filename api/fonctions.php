@@ -41,6 +41,10 @@
 	{
 		return '<span style="color:'.($solde>=0 ? "green":"red").'">'.($solde>=0 ? "+":"") . $solde.'€</span>';
 	}
+
+
+
+	/* ATTENTION ! Pour tout ajout de grade modifier aussi /espace_ZZ/assets/js/script.js:edit_membre()*/
 	function grade($g)
 	{
 			 if($g==0) return "ZZ";
@@ -48,6 +52,7 @@
 		else if($g==2) return "BDE";
 		else if($g==3) return "Listeux";
 		else if($g==4) return "Créateur du site";
+		else if($g==664)return "Romane";
 		else 		   return "Grade sans nom: $g";
 	}
 	function get_autorisations($grade){
@@ -57,12 +62,16 @@
 		$grades = array(
 			"club" => array(1,2,3,4),
 			"bde" => array(2,3,4),
-			"listeux" => array(3)
+			"listeux" => array(3),
+			"romane" => array(664)
 		);
 	
 		foreach($grades as $key => $val){
 			if(in_array($grade, $val))$retour[$key] = $key;
 		}
+
+		if(date("d-m") == "16-11")$retour['romane']='romane';
+
 		return $retour;
 	}
 	function annee_scolaire()
