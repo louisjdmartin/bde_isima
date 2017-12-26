@@ -197,7 +197,7 @@
 												echo "<br>Le saviez vous ? Le temps de chargement moyen de l'API est de 100ms, sauf aujourd'hui où celui-ci est de 4s.";
 												echo "<br>COGO EVERYWHERE";
 												echo "<br>Le saviez vous ? C'était mieux avant !";
-											} ?>
+											}if(isset($user['autorisations']['romane'])) echo "<br />Ce grade aussi beau qu'inutile vous est offert par Louis du BDE bliZZard ;-) j'espère qu'il fera des jaloux !"; ?>
 										</li>
 										
 									</ul>

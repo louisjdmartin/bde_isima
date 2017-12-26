@@ -285,6 +285,7 @@ function edit_membre(id, nom, prenom, surnom, mail, carte, promo, grade, cotisat
 		if(grade == 2)bde = "selected";else bde= "";
 		if(grade == 3)listeux = "selected";else listeux= "";
 		if(grade == 4){super_grade="<option value='4' selected>Créateur du site</option>";disable_super="disabled";} 
+		if(grade == 664){super_grade="<option value='664' selected>Romane</option>";disable_super="disabled";} 
 
 
 		popup("<h3>Edition d'un membre</h3>\
