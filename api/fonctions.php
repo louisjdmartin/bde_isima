@@ -48,7 +48,23 @@
 		else if($g==2) return "BDE";
 		else if($g==3) return "Listeux";
 		else if($g==4) return "Créateur du site";
-		else 		   return "Grade non défini: $g";
+		else 		   return "Grade sans nom: $g";
+	}
+	function get_autorisations($grade){
+		$retour = array("ZZ" => "ZZ");
+
+		/* SYNTAXE: "droits" => array(grades_autorisé) */
+		$grades = array(
+			"club" => array(1,2,3,4),
+			"bde" => array(2,3,4),
+			"listeux" => array(3)
+		);
+	
+		foreach($grades as $key => $val){
+			if(in_array($grade, $val))$retour[$key] = $key;
+		}
+		print_r($retour);die();
+		return $retour;
 	}
 	function annee_scolaire()
 	{

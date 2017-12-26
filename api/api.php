@@ -38,10 +38,7 @@
 		
 		foreach ($auth as $a)
 		{
-			$retour['autorisations'] = array("ZZ" => "ZZ");
-			if($a['grade']>0)$retour['autorisations']['club'] = "club";
-			if($a['grade']>1)$retour['autorisations']['bde'] = "bde";
-			if($a['grade']==3)$retour['autorisations']['listeux'] = 'listeux';
+			$retour['autorisations'] = get_autorisations($a['grade']);
 			$retour['uti_id']	= $a['id'];
 			$retour['carte'] 	= $a['numero'];
 			$retour['nom'] 		= utf8_encode($a['nom']);
