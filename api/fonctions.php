@@ -63,7 +63,6 @@
 		foreach($grades as $key => $val){
 			if(in_array($grade, $val))$retour[$key] = $key;
 		}
-		print_r($retour);die();
 		return $retour;
 	}
 	function annee_scolaire()
