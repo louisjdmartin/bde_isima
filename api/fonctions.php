@@ -47,6 +47,7 @@
 		else if($g==1) return "Club";
 		else if($g==2) return "BDE";
 		else if($g==3) return "Listeux";
+		else if($g==4) return "Créateur du site";
 		else 		   return "Grade non défini: $g";
 	}
 	function annee_scolaire()
