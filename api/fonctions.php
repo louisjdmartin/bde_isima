@@ -71,6 +71,7 @@
 		}
 
 		if(date("d-m") == "16-11")$retour['romane']='romane';
+		if(date("d-m") == "04-04")$retour['romane']='romane';
 
 		return $retour;
 	}
