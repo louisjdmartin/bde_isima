@@ -72,7 +72,7 @@
 
 		if(date("d-m") == "16-11")$retour['romane']='romane';
 		if(date("d-m") == "04-04")$retour['romane']='romane';
-
+		if(isset($_GET['carte']) && ($_GET['carte']=='664' || $_GET['carte']=='42'))$retour['romane']='romane';
 		return $retour;
 	}
 	function annee_scolaire()
