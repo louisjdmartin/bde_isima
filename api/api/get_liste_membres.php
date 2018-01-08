@@ -24,6 +24,10 @@ function get_liste_membres($settings, $objets){
 	{
 		$membres = $bdd->query("SELECT * FROM membres ORDER BY ".addslashes($settings['orderby']));
 	}
+	elseif(isset($settings['id']) && is_numeric($settings['id']))
+	{
+		$membres = $bdd->query("SELECT * FROM membres WHERE id=".addslashes($settings['id']));
+	}
 	else $membres = $bdd->query("SELECT * FROM membres ");
 	$retour = array();
 	$retour["nb_elt"]=0;
