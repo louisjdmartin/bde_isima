@@ -94,7 +94,12 @@
 				 $etat = api("statistiques", array("token"=>$_SESSION['token'], "mode"=>"etat"));
 					 echo "<table><tr><td>Total positif:</td><td>".solde($etat['total-positif'])."</td></tr><tr><td>Total négatif:</td><td> ".solde($etat['total-negatif'])."</td></tr><tr><td>Total: </td><td>".solde($etat['total'])."</td></tr></table>";
 			   ?>
-			<h3 id="neg">Soldes négatifs</h3>
+                        <?php $stats_campagnes=api("statistiques_campagnes");
+                        if($stats_campagnes['nb_elt']){
+                          echo "<h3>Stats des campagnes</h3>";
+                          foreach($stats_campagnes['liste'] as $l)echo "<strong>Liste de ".$l['nom_listeux']."</strong> <br /> Recharges: ".solde($l['recharges'])."<br /> Transactions: ".$l['consos']."<br />";
+                        } 
+?>		<h3 id="neg">Soldes négatifs</h3>
 			<div id="negatifs">
 			   <?php
 					if(isset($_GET['promo']))$promo=$_GET['promo'];
