@@ -5,8 +5,27 @@
 
 	<!-- Logo -->
 		<div id="logo">
-			<h1><a href="."><img id="logo_img" src="<?php echo (troll_mode($user) ? "../images/polytech_lite.gif" : "../images/logo.png"); ?>" style="<?php echo (troll_mode($user) ? "border-radius:64px" : ""); ?>" height="128"/></a></h1>
+			<?php 
+				if(troll_mode($user)){
+					echo '<h1><a href="."><img id="logo_img" src="../images/polytech_lite.gif" style="border-radius:128px;" height=128 /></a></h1>';
+				}
+				elseif(isset($user['autorisations']['romane'])){
+					echo '<h1><a href="."><img id="logo_img" src="../easter_eggs/franck_romane.gif" style="border-radius:4px;"  height=128 /></a></h1>
+					<style>
+						#header-wrapper{background: url(../easter_eggs/fond_romane.png) repeat;}
+						#nav{background: rgba(255,255,255,.9);border-radius:4px;}
+					</style>
+					';
+				}
+				else{
+					echo '<h1><a href="."><img id="logo_img" src="../images/logo.png"  height=128 /></a></h1>';
+				}
+			?>
 		</div>
+
+
+
+
 
 	<!-- Nav -->
 		<nav id="nav">
