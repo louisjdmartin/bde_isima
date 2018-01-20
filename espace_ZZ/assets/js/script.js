@@ -1112,7 +1112,7 @@ function show_commande(id_evt){
 }
 
 
-function encaisse_cmd(id_cmd, qte_max){
+function encaisse_cmd(id_cmd, qte_max, id_user){
 	if(qte_max == 0){
 		close_popup();
 		alert("Vous avez déjà encaissé !");
@@ -1122,6 +1122,7 @@ function encaisse_cmd(id_cmd, qte_max){
 		");
 		for(i=qte_max;i>=1;i--) $('#qte_to_pay').append("<option>"+i+"</option>");
 	}
+	$.getJSON("../api/ajax/get_carte_by_id?id="+id_user).done(function(data){$('#carte_bde_to_pay').val(data.numero);});
 }
 function encaisse_liquide(id_cmd){
 	load();
