@@ -59,7 +59,7 @@
 			<td>".($l['paiement']=="1" ? "Carte BDE":"Liquide")."</td>
 			<td>".$l['commentaire']."</td>
 			<td>
-				<button style='width:100%' onclick='encaisse_cmd(".$l['id'].", ".($l['qte'] - $l['qte_paye']).")'>Encaisser</button>
+				<button style='width:100%' onclick='encaisse_cmd(".$l['id'].", ".($l['qte'] - $l['qte_paye']).", ".$l['id_membre'].")'>Encaisser</button>
 				<br /><button style='width:100%' onclick='annuler_cmd_club(".$l['id'].")'>Annuler commande</button></td>
 		</tr>
 		";
