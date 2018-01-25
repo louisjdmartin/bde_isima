@@ -117,7 +117,7 @@ function get_all_articles(numero){
 	
 	load();
 	$.getJSON('../api/ajax/get_liste_articles',{token:$('#token').val()}).done(function(data){
-		html = "<h3>Encaisser sur la carte <a onclick='autre_carte();return false;' href='#' style='text-decoration:underline'>"+numero+"</a> /  <a onclick='recharge("+numero+");return false;' href='#' style='text-decoration:underline'>Recharger</a></h3><div id='liste_articles'>";
+		html = "<h3>Encaisser sur la carte <a onclick='autre_carte();return false;' href='#' style='text-decoration:underline'>"+numero+"</a> /  <a onclick='recharge("+numero+");return false;' href='#' style='text-decoration:underline'>Recharger</a></h3><form onsubmit='return false'><input id='fast_search' type='text' placeholder='Recherche rapide article' /></form><div id='liste_articles'>";
 		for(i=0;i<data.nb_elt;i++){
 			html = html + '<span class="article" onclick="encaisser('+numero+', '+data.liste[i].id+')"><img src="'+data.liste[i].img+'" /><br />'+data.liste[i].nom+' ('+data.liste[i].tarif+'€)</span>';
 			
@@ -125,6 +125,19 @@ function get_all_articles(numero){
 		html = html + "</div>";
 		fin_load();
 		popup(html);
+
+
+		$('#fast_search').keyup(function(){
+	       $('#liste_articles .article').each(function(){
+	           chaine=$(this).html().toUpperCase();
+	           recherche=$('#fast_search').val()
+	           var position = chaine.search(recherche.toUpperCase());
+	           if(position>=0){$(this).slideDown(0);}
+	           else{$(this).slideUp(0);}
+	       });
+	    }).focus();
+
+
 	});
 }
 function encaisser(carte, article)
@@ -1319,7 +1332,10 @@ $(document).ready(function(){
 				return false;
 			}
 			else cherche_carte_other();
-});
+	    });
+		$('html,body').keyup(function(e){
+			if(e.keyCode==27)close_popup();
+		});
 
 
 });
