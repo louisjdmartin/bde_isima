@@ -64,8 +64,10 @@
 		{
 			include_once dirname(__FILE__) . "/api/".$fonction.".php";
 		}
-		else return array("error" => "Fonction non définie");
-		
+		else{
+		  header('HTTP/1.0 404 Not Found');
+		  return array("error" => "Fonction non définie");
+		}
 		//On génère les objets utilisables
 		$objets=array(
 			"bdd" => $bdd,
