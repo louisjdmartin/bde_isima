@@ -16,7 +16,7 @@
 
 function cherche_carte($settings, $objets){
 	$bdd = $objets['bdd'];	
-	if(!isset($objets['user_info']['autorisations']['club']))return (array("error" => 1, "msg" => "Action refusée"));
+	if(!isset($objets['user_info']['autorisations']['ZZ']))return (array("error" => 1, "msg" => "Action refusée"));
 	$conditions = "nom LIKE '%%'";
 	
 	$mots = explode(" ",$settings['q']);
