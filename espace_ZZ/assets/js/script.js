@@ -1,3 +1,43 @@
+function virement_choix_carte(){
+	popup("<h3>Faire un virement</h3><form onsubmit='virement_cherche_carte()'><input placeholder='Chercher un membre ou taper une carte' id='search_carte' type='text' /><input style='float:right' type='submit' value='Continuer' /></form><div style='clear:both'></div>");
+	$('#search_carte').focus();
+}
+function virement_cherche_carte(){
+	$.getJSON("../api/ajax/cherche_carte?q="+$('#search_carte').val()+"&token="+$('#token').val()).done(function(data){
+		popup("<h3>Faire un virement</h3>");
+		for(i=0;i<data.nb_elt;++i){
+			$('#popup').append("<div class='nom_recherche' onclick='virement_choix_montant("+data.liste[i].carte+")'>Envoyer à "+data.liste[i].prenom+" "+data.liste[i].nom+"</div>");
+		}
+		$('#popup').append("<a onclick='virement_choix_carte()'>Retour</a>");
+		if(data.nb_elt==1)virement_choix_montant(data.liste[0].carte);
+		if(data.nb_elt==0){virement_choix_carte();fin_load("Aucun résultats !");}
+		if(data.nb_elt>10){virement_choix_carte();fin_load("Trop de résultats, préciser la recherche");}
+	});
+	popup("<h3>Faire un virement</h3><p>Recherche de carte...</p>");
+}
+function virement_choix_montant(carte){
+	popup("<h3>Faire un virement à <span id='user'>[carte "+carte+"]</span></h3><form id='form_vir' onsubmit='virement_valide("+carte+");return false;'><input type='number' id='montant' placeholder='Saisir un montant' /><input type='submit' value='Envoyer' style='float:right'/></form>");
+	$.getJSON("../api/ajax/cherche_carte?q="+carte+"&token="+$('#token').val()).done(function(data){$('#user').html(data.liste[0].nom+" "+data.liste[0].prenom);});
+	$('#montant').focus();
+	$('#form_vir').append("<a onclick='virement_choix_carte()'>Retour</a>");
+
+}
+
+function virement_valide(carte){
+	if($('#montant').val()>0){
+		load();
+		$.getJSON("../api/ajax/virement?to="+carte+"&token="+$('#token').val()+"&montant="+$('#montant').val()).done(function(data){
+			if(data.error==1){
+				fin_load("Action refusé !<br />"+data.error_msg);
+			}
+			else{
+				$('#load,#fond_load').hide();
+				popup_force_actualise("<h3>Opération terminée !</h3>");
+			}
+		});
+	}
+}
+
 function popup(html)
 {
 	$('#popup').html(html);
