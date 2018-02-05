@@ -94,7 +94,7 @@
 		<script src="assets/js/util.js"></script>
 		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 		<script src="assets/js/main.js"></script>
-		<script src="assets/js/script.js"></script>
+		<script src="assets/js/script.js?update=4"></script>
 		<script src="assets/js/jquery_fileupload/js/vendor/jquery.ui.widget.js"></script>
 		<script src="assets/js/jquery_fileupload/js/jquery.iframe-transport.js"></script>
 		<script src="assets/js/jquery_fileupload/js/jquery.fileupload.js"></script>
