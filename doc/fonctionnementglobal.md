@@ -47,7 +47,8 @@ L'accès en PHP se fait via `api("nomdelafonction", $parametres)` où $paramètr
 Menu dans header.php
 
 La variable $page dans index.php contient toutes les url possible et le titre à afficher pour le navigateur
-L'entrée carte est associé à l'url /espace_ZZ/carte et au fichier /espace_ZZ/pages/carte.php
+
+Par exemple l'entrée carte est associé à l'url /espace_ZZ/carte et au fichier /espace_ZZ/pages/carte.php
 
 ## Ajouter un module dans l'espace membre
 * Créer la/les page(s) qui affichera le module dans le dossier /espace_ZZ/pages/nomdelapage.php
