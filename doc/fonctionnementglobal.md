@@ -54,6 +54,7 @@ Par exemple l'entrée carte est associé à l'url /espace_ZZ/carte et au fichier
 * Créer la/les page(s) qui affichera le module dans le dossier /espace_ZZ/pages/nomdelapage.php
 * Ajouter la page à la variable $page d'index.php
 * Sans avoir écrit une seule ligne de code les fichiers /api/api.php et /api/fonctions.php sont importés
+* Coté client les fichiers dans /espace_ZZ/assets/js et /espace_ZZ/assets/css sont importés
 * Pour les accès à la base de données, ajouter les modules necessaires dans l'API
 * Le module est accessible via espace_ZZ/nomdelapage
 * Si il y a besoin de passer des paramètres on peux soit modifier l'url rewriting via le .htacess soit utiliser les URL sous la forme /espace_ZZ/?page=nomdelapage&p1=valeur1&p2=valeur2
