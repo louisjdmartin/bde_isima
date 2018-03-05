@@ -38,6 +38,7 @@ L'accès en PHP se fait via `api("nomdelafonction", $parametres)` où $paramètr
 * Créer un fichier /api/api/nomdelafonction.php
 * Ajouter un commentaire un début de fichier, celui-ci permet de construire la doc (prendre exemple sur les autres fichiers)
 * Mettre le code source dans une fonction `function nomdelafonction($settings, $objets){}`
+* Le fichier /api/fonctions.php est importé sans rien écrire !
 * Le module est accessible !
 * Vérifiez toujours les droits avec $objets['user_info']['autorisations']['nomdudroit']
 * Toujours retourner un array, même si c'est juste array("error" => 0")
