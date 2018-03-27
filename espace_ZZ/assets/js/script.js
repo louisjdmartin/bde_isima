@@ -16,7 +16,7 @@ function virement_cherche_carte(){
 	popup("<h3>Faire un virement</h3><p>Recherche de carte...</p>");
 }
 function virement_choix_montant(carte){
-	popup("<h3>Faire un virement à <span id='user'>[carte "+carte+"]</span></h3><form id='form_vir' onsubmit='virement_valide("+carte+");return false;'><input type='number' id='montant' placeholder='Saisir un montant' /><input type='submit' value='Envoyer' style='float:right'/></form>");
+	popup("<h3>Faire un virement à <span id='user'>[carte "+carte+"]</span></h3><form id='form_vir' onsubmit='virement_valide("+carte+");return false;'><input type='number' id='montant' placeholder='Saisir un montant' step='0.1'/><input type='submit' value='Envoyer' style='float:right'/></form>");
 	$.getJSON("../api/ajax/cherche_carte?q="+carte+"&token="+$('#token').val()).done(function(data){if(data.nb_elt==1)$('#user').html(data.liste[0].nom+" "+data.liste[0].prenom);});
 	$('#montant').focus();
 	$('#form_vir').append("<a onclick='virement_choix_carte()'>Retour</a>");
