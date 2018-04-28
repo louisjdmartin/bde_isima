@@ -13,9 +13,10 @@
 
 <script>
 	function print_evt(){
-		popup("\
+		popup("<strong>Impression classique</strong><br>\
 		<a class='button' href='assets/php/print_evt.php?id=<?= $_GET['id']; ?>&token=<?= $_SESSION['token'];?>&order=NULL'>Tri par nom</a>\
-		<a class='button' href='assets/php/print_evt.php?id=<?= $_GET['id']; ?>&token=<?= $_SESSION['token'];?>&order=commande'>Tri par date</a>\
+		<a class='button' href='assets/php/print_evt.php?id=<?= $_GET['id']; ?>&token=<?= $_SESSION['token'];?>&order=commande'>Tri par date</a><br>\
+		<strong>Impression spéciale</strong><a class='button' href='assets/php/print_tombola.php?id=<?= $_GET['id']; ?>&token=<?= $_SESSION['token'];?>'>Imprimer tickets de tombola</a>\
 		");
 	}
 </script>
