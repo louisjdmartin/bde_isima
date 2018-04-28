@@ -5,7 +5,7 @@
 		
 		echo "<div class='row 200%'>";
 		
-		if($liste['nb_elt'] == 0) echo "<div style='clear:both'></div><br /><br /><br />Aucun événement à venir !";
+		if($liste['nb_elt'] == 0) echo "<div class='4u 12u$(medium) important(medium)'>Aucun événement à venir !</div>";
 		else foreach($liste['liste'] as $evt)
 		{
 			$club = api("get_club", array("id" => $evt['id_club']))['liste'][0];
