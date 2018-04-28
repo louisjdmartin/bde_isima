@@ -1,2 +1,0 @@
-[2017-11-15 09:30:47] UserID#481 function evt_inscription [club][BDE] 
-[ERROR] {"bde":"0","other":"2","other_name":"","id_evt":"19","token":"***"}{"error":1,"error_msg":"Vous devez commander au moins 1 article\nLe num\u00e9ro de carte doit \u00eatre un nombre\n"}
