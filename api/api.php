@@ -84,7 +84,7 @@
 		
 		if(isset($settings['token']))$settings['token']='***';
 		
-		if(!in_array($fonction,array("get_club", "get_news", "get_liste_partenaires", "get_liste_clubs")))
+		if(!in_array($fonction,array("get_club", "get_news", "get_liste_partenaires", "get_liste_clubs_actifs")))
 		  {
 		    if(!is_file($filename))file_put_contents($filename, "");
 		    file_put_contents($filename, "[".date('Y-m-d h:i:s')."] UserID#".$objets['user_info']['uti_id']." function ".$fonction." ".(isset($objets['user_info']['autorisations']['club']) ? "[club]":"").(isset($objets['user_info']['autorisations']['bde']) ? "[BDE]":"")." \n", FILE_APPEND);
