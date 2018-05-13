@@ -28,7 +28,7 @@ function evt_get_liste_inscrits($settings, $objets){
 		$orderby = "membres.prenom";
 		if(isset($settings['order']) && $settings['order']=='commande')$orderby = "evt_commandes.id";
 		
-		$liste_inscrit = $bdd->query("SELECT evt_commandes . * , membres.nom, membres.prenom, membres.surnom, evt_articles.nom AS nom_article
+		$liste_inscrit = $bdd->query("SELECT evt_commandes . * , membres.nom, membres.prenom, membres.surnom, evt_articles.nom AS nom_article, evt_articles.id AS id_art
 										FROM  `evt_commandes` , membres, evt_articles
 										WHERE evt_commandes.id_membre = membres.id
 										AND evt_commandes.id_article = evt_articles.id
@@ -37,6 +37,7 @@ function evt_get_liste_inscrits($settings, $objets){
 		foreach($liste_inscrit as $l){
 			$liste[] = array(
 				"id" => $l['id'],
+				"id_art" => $l['id_art'],
 				"id_membre" => $l['id_membre'],
 				"paiement" => $l['paiement'],
 				"qte" => $l['qte'],
