@@ -9,6 +9,7 @@
 <?php
 	if(!isset($_GET['id']) || !is_numeric($_GET['id']))die("Accès refusé !");
 	$infos = api("get_info_evt", array("id" => $_GET['id']));
+	$liste = api("evt_get_liste_inscrits", array("token" => $_SESSION['token'], "id_evt" => $_GET['id']));
 ?>
 
 <script>
@@ -16,8 +17,31 @@
 		popup("<strong>Impression classique</strong><br>\
 		<a class='button' href='assets/php/print_evt.php?id=<?= $_GET['id']; ?>&token=<?= $_SESSION['token'];?>&order=NULL'>Tri par nom</a>\
 		<a class='button' href='assets/php/print_evt.php?id=<?= $_GET['id']; ?>&token=<?= $_SESSION['token'];?>&order=commande'>Tri par date</a><br>\
-		<strong>Impression spéciale</strong><a class='button' href='assets/php/print_tombola.php?id=<?= $_GET['id']; ?>&token=<?= $_SESSION['token'];?>'>Imprimer tickets de tombola</a>\
+		<strong>Impression spéciale</strong><br><a class='button' onclick='print_tombola()'>Imprimer tickets de tombola</a>\
 		");
+	}
+	function print_tombola(){
+		popup("<strong>Impression tombola</strong>, saisissez les 'poids' des tickets.<br />Un poids de 4 signifira que l'article vaut 4 tickets.<form onsubmit='return false'><br /><?php
+			$already_used = [];
+			foreach($liste['liste'] as $e){
+				if(!in_array($e['id_art'],$already_used)){
+					$already_used[] = $e['id_art'];
+					echo "<strong>Poids ".$e['nom_article']."</strong><input type='number' id='art".$e['id_art']."' value='1' min='1'><br />";
+				}			
+			}
+		?></form><a class='button' onclick='redirect_print_tombola()'>Imprimer tickets de tombola</a>");
+	}	
+	function redirect_print_tombola(){
+	
+		window.location = "assets/php/print_tombola.php?id=<?= $_GET['id']; ?>&token=<?= $_SESSION['token'];?><?php
+			$already_used = [];
+			foreach($liste['liste'] as $e){
+				if(!in_array($e['id_art'],$already_used)){
+					$already_used[] = $e['id_art'];
+					echo "&art".$e['id_art']."=\"+$('#art".$e['id_art']."').val()+\"";
+				}			
+			}
+		?>";
 	}
 </script>
 <a class='button' href='evenement_inscription.<?= $infos['id_club']; ?>'>Retour</a>
