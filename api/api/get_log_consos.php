@@ -31,7 +31,7 @@ function get_log_consos($settings, $objets){
 	{
 		$recharges = $bdd->query("SELECT transactions.timestamp, transactions.anciensolde, articles.nom, articles.tarif FROM transactions, articles, membres WHERE transactions.id_personne= membres.id AND membres.numero = ".$settings['numero']." AND articles.id=transactions.id_article ORDER BY timestamp DESC LIMIT 0, $limit");
 	}
-	else return array("error" => 1, "msg" => "Action refusé !");
+	else return array("error" => 1, "msg" => "Action refusé !", "nb_elt" => 0, "liste" => array());
 	$retour = array();
 	$retour["nb_elt"]=0;
 	foreach($recharges as $r){
