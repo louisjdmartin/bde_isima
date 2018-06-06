@@ -76,9 +76,9 @@
 						</div>
 						<nav>
 							<ul>
-								<li><a href="#actus">News</a></li>
+								<li><a onclick='load_section("actus")' href="#actus">News</a></li>
 								<!--<li><a href="#bde">Le BDE</a></li>-->
-								<li><a href="#clubs">Clubs</a></li>
+								<li><a onclick='load_section("clubs")' href="#clubs">Clubs</a></li>
 								<li><a href="./espace_ZZ">Compte</a></li>
                                                                 <li><a href='https://drive.google.com/drive/folders/0B8UQ_-N6TCbvRDZEcUtTS1hWc2M?usp=sharing'>Annales</a></li>
 								<li><a href="#contact">Contact</a></li>
@@ -94,9 +94,9 @@
 								<?php /*include "pages/actus.php";*/ ?>Chargement de la section différé...
 							</article>
 
-							<article id="bde">
-								<?php include "pages/bde.php"; ?>
-							</article>
+							<!--<article id="bde">
+								<?php/* include "pages/bde.php";*/ ?>
+							</article>-->
 
 							<article id="clubs">
 								<?php /*include "pages/clubs.php";*/ ?>Chargement de la section différé...
@@ -145,7 +145,10 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 			<script src="assets/js/scripts.js"></script>
-			<script>function load_section(section){$.ajax('pages/'+section+'.php').done(function(data){$('#'+section).html(data);});}window.onload = setTimeout("load_section('actus');load_section('clubs');load_section('partenaires')",4000)</script>
+			<script>function load_section(section){$.ajax('pages/'+section+'.php').done(function(data){$('#'+section).html(data);});}window.onload = setTimeout("load_section('partenaires')",4000);
+			if (window.location.hash.substr(1) == 'clubs')load_section('clubs');
+			if (window.location.hash.substr(1) == 'actus')load_section('actus');
+			</script>
 			<?php include ("./script_indispensable.php"); ?>
 
 	</body>
