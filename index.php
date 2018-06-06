@@ -131,7 +131,7 @@
 				<!-- Footer -->
 					<footer id="footer">
 						<p class="copyright">&copy; BDE ISIMA. Design: <a href="https://html5up.net">HTML5 UP</a>.
-						<br />Créé par BDE BliZZard. <a href="#partenaires">Nos partenaires</a></p>
+						<br />Créé par BDE BliZZard. <a href="#partenaires" onclick="load_section('partenaires');">Nos partenaires</a></p>
 					</footer>
 
 			</div>
@@ -145,9 +145,12 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 			<script src="assets/js/scripts.js"></script>
-			<script>function load_section(section){$.ajax('pages/'+section+'.php').done(function(data){$('#'+section).html(data);});}window.onload = setTimeout("load_section('partenaires')",4000);
+			<script>function load_section(section){$.ajax('pages/'+section+'.php').done(function(data){$('#'+section).html(data);});}
 			if (window.location.hash.substr(1) == 'clubs')load_section('clubs');
-			if (window.location.hash.substr(1) == 'actus')load_section('actus');
+			if (window.location.hash.substr(1) == 'actus')load_section('actus');                        
+			if (window.location.hash.substr(1) == 'partenaires')load_section('partenaires');
+
+
 			</script>
 			<?php include ("./script_indispensable.php"); ?>
 
