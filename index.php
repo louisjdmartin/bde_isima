@@ -91,7 +91,7 @@
 					<div id="main">
 
 							<article id="actus">
-								<?php include "pages/actus.php"; ?>
+								<?php /*include "pages/actus.php";*/ ?>Chargement de la section différé...
 							</article>
 
 							<article id="bde">
@@ -99,7 +99,7 @@
 							</article>
 
 							<article id="clubs">
-								<?php include "pages/clubs.php"; ?>
+								<?php /*include "pages/clubs.php";*/ ?>Chargement de la section différé...
 							</article>
 
 							<article id="contact">
@@ -111,7 +111,7 @@
 							</article>
 							
 							<article id="partenaires">
-								<?php include "pages/partenaires.php"; ?>
+								<?php /*include "pages/partenaires.php";*/ ?>Chargement de la section différé...
 							</article>
 
 							<article id="details_club">
@@ -145,6 +145,7 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 			<script src="assets/js/scripts.js"></script>
+			<script>function load_section(section){$.ajax('pages/'+section+'.php').done(function(data){$('#'+section).html(data);});}window.onload = setTimeout("load_section('actus');load_section('clubs');load_section('partenaires')",4000)</script>
 			<?php include ("./script_indispensable.php"); ?>
 
 	</body>

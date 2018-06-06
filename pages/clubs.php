@@ -1,6 +1,6 @@
 <h2 class="major">Vie associative</h2>
 <p>La vie associative est un aspect très important du BDE, quelque soit tes passions tu trouveras forcément un club qui te plaira !</p>
-<?php
+<?php require '../api/api.php';
 	$clubs = api("get_liste_clubs_actifs");
 	foreach ($clubs['liste'] as $c)
 	{
