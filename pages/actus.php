@@ -1,5 +1,5 @@
 <h2 class="major">Actualitées</h2>
-<?php
+<?php require '../api/api.php';
 	$news = api("get_news");
 	foreach($news['liste'] as $n)
 	{
