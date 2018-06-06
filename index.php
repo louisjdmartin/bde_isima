@@ -83,7 +83,7 @@
                                                                 <li><a href='https://drive.google.com/drive/folders/0B8UQ_-N6TCbvRDZEcUtTS1hWc2M?usp=sharing'>Annales</a></li>
 								<li><a href="#contact">Contact</a></li>
 							</ul>
-							<p><br /><a href="#actus"><em>DERNIERE NEWS: <?php echo api("get_news", array("nombre" => 1))['liste'][0]['titre']; ?></em></a></p>
+							<p><br /><a onclick="load_section('actus')" href="#actus"><em>DERNIERE NEWS: <?php echo api("get_news", array("nombre" => 1))['liste'][0]['titre']; ?></em></a></p>
 						</nav>
 					</header>
 
