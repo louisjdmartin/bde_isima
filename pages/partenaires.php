@@ -1,6 +1,6 @@
 <h2 class="major">Partenaires</h2>
 <p>Voici la liste des partenaires qui soutiennent notre BDE.</p>
-<?php
+<?php require '../api/api.php';
 	$parts = api("get_liste_partenaires");
 	foreach($parts['liste'] as $n)
 	{
