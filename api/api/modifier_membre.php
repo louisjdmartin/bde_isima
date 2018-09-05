@@ -59,7 +59,7 @@ function modifier_membre($settings, $objets){
 			0.0,
 			0,
 			".annee_scolaire().",
-			NULL
+			NULL,NULL
 		);");
 		
 
