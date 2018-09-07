@@ -43,7 +43,8 @@ function get_liste_membres($settings, $objets){
 			"grade" => utf8_encode($r['grade']),
 			"cotisation" => utf8_encode($r['cotisation']),
 			"solde" => utf8_encode($r['solde']),
-			"surnom" => utf8_encode($r['surnom'])
+			"surnom" => utf8_encode($r['surnom']),
+			"telephone" => utf8_encode($r['telephone'])
 		);
 		$retour["nb_elt"]++;
 	}

@@ -1,4 +1,5 @@
 ﻿<?php
+ini_set("display_errors", "1");
 /*
 	modifier_membre.php
 	Modifie un membre
@@ -59,7 +60,7 @@ function modifier_membre($settings, $objets){
 			0.0,
 			0,
 			".annee_scolaire().",
-			NULL,NULL
+			NULL,".addslashes($settings['telephone'])."
 		);");
 		
 
@@ -78,6 +79,7 @@ function modifier_membre($settings, $objets){
 			$bdd->query("UPDATE membres SET promo='".$settings['promo']."' WHERE id='".$settings['id']."'");
 			$bdd->query("UPDATE membres SET grade='".$settings['grade']."' WHERE id='".$settings['id']."'");
 			$bdd->query("UPDATE membres SET cotisation='".$settings['cotisation']."' WHERE id='".$settings['id']."'");
+			$bdd->query("UPDATE membres SET telephone='".$settings['telephone']."' WHERE id='".$settings['id']."'");
 			$retour = array("error" => 0);
 		}
 		else
