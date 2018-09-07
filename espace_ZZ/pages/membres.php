@@ -22,6 +22,7 @@
 					<th><a href='./?page=membres&order=$order&orderby=promo $order'>Promo</a></th>
 					<th><a href='./?page=membres&order=$order&orderby=grade $order'>Grade</a></th>
 					<th><a href='./?page=membres&order=$order&orderby=solde $order'>Solde</a></th>
+					<th><a href='./?page=membres&order=$order&orderby=telephone $order'>Tel</a></th>
 					<th><a href='./?page=membres&order=$order&orderby=cotisation $order'>Cotisation</a></th>
 					<th></th>
 				</tr>
@@ -37,6 +38,7 @@
 					<td>".$mb['promo']."</td>
 					<td>".grade($mb['grade'])."</td>
 					<td>".solde($mb['solde'])."</td>
+					<td>".$mb['telephone']."</td>
 					<td>".$mb['cotisation']."</td>
 					<td style='width:128px;text-align:center' onclick='edit_membre(".$mb['id'].", \"".$mb['nom']."\", \"".$mb['prenom']."\", \"".$mb['surnom']."\", \"".$mb['mail']."\", \"".$mb['numero']."\", \"".$mb['promo']."\", \"".$mb['grade']."\", \"".$mb['cotisation']."\")'><button>Editer</button></td>
 				</tr>

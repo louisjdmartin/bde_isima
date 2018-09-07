@@ -329,6 +329,7 @@ function edit_membre(id, nom, prenom, surnom, mail, carte, promo, grade, cotisat
 		carte=data.numero;
 		promo=data.promo;
 		grade=data.grade;
+		tel=data.telephone
 
 
 		if(id==0)efface_button="";
@@ -347,6 +348,7 @@ function edit_membre(id, nom, prenom, surnom, mail, carte, promo, grade, cotisat
 			<label for='nom_art'>Nom</label><input type='text' id='nom_mb' />\
 			<label for='nom_art'>Prénom</label><input  type='text' id='prenom_mb' />\
 			<label for='nom_art'>Surnom</label><input type='text' id='surnom_mb' />\
+			<label for='nom_art'>Téléphone</label><input type='text' id='tel_mb' />\
 			<label for='nom_art'>Mail</label><input type='text' id='mail_mb' />\
 			<label for='nom_art'>Carte</label><input type='text' id='carte_mb' />\
 			<label for='nom_art'>Promo</label><input type='text' id='promo_mb' />\
@@ -369,6 +371,7 @@ function edit_membre(id, nom, prenom, surnom, mail, carte, promo, grade, cotisat
 		$('#mail_mb').val(mail);
 		$('#carte_mb').val(carte);
 		$('#promo_mb').val(promo);
+		$('#tel_mb').val(tel);
 
 
 		fin_load();
@@ -384,6 +387,7 @@ function add_membre()
 	<label for='nom_art'>Nom</label><input  type='text' id='nom_mb' />\
 	<label for='nom_art'>Prénom</label><input type='text' id='prenom_mb' />\
 	<label for='nom_art'>Mail</label><input type='text' id='mail_mb' />\
+	<label for='nom_art'>Tel</label><input type='text' id='tel_mb' />\
 	<label for='nom_art'>Promo</label><input type='text' id='promo_mb' />\
 	<br /><strong>Solde initial</strong>: 0<br /> <strong>grade</strong>: ZZ<br /> <strong>Marqué comme cotisant</strong> <br />\
 	<em>L'ajout peut prendre un peu de temps.</em>\
@@ -404,7 +408,8 @@ function valide_add_membre(){
 			nom : $('#nom_mb').val(),
 			prenom : $('#prenom_mb').val(),
 			mail : $('#mail_mb').val(),
-			promo : $('#promo_mb').val()
+			promo : $('#promo_mb').val(),
+			telephone : $('#tel_mb').val()
 		}).done(function(data){
 			if(data.error==0)
 			{
@@ -431,6 +436,7 @@ function valide_membre(){
 			carte : $('#carte_mb').val(),
 			promo : $('#promo_mb').val(),
 			grade : $('#grade_mb').val(),
+			telephone : $('#tel_mb').val(),
 			cotisation : $('#cotisation_mb').val()
 		}).done(function(data){
 			if(data.error==0)
