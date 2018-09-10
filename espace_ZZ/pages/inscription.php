@@ -63,7 +63,9 @@
 						</tr>
 					";
 				}
-				echo "</table><button onclick='annuler_inscription_evt(".$_GET['id'].")'>Annuler cette inscription</button>";
+				echo "</table><button onclick='annuler_inscription_evt(".$_GET['id'].")'>Annuler cette inscription</button>
+				<br /> <br /> <a class='button' href='./inscription'>S'inscrire pour un autre événement.</a>
+				";
 
 			}
 			else if(is_numeric($places['places']) && $places['places'] == 0) echo "Plus de places disponibles !";
@@ -109,10 +111,10 @@
 
 						<h3>Qui voulez vous inscrire ?</h3>
 						<em>Vous voyez ceci car vous êtes enregistré comme club ou BDE</em><br />
-						<?php if(!$inscrit['bool']){ ?><input type='radio' name='who' id='moi' checked onclick='$("#info_other,#info_carte_other").hide();$("#carteBDE").show()'/><label for='moi' class='inline' >Inscription pour moi</label><?php } ?>
+						<?php if(!$inscrit['bool']){ ?><input type='radio' name='who' id='moi' checked onclick='$("#info_other,#info_carte_other").hide();$("#carteBDE").show()'/><label for='moi' class='inline' >Inscription pour moi</label><br /><br /><?php } ?>
 
 
-						<input type='radio' name='who' id='other_bde'  <?php if($inscrit['bool']) echo "checked"; ?>  onclick='$("#carteBDE,#info_carte_other").show();$("#other_carte").focus();$("#info_other").hide()' /><label for='other_bde' class='inline'>Inscrire quelqu'un par son numéro de carte</label>
+						<input type='radio' name='who' id='other_bde'  <?php if($inscrit['bool']) echo "checked"; ?>  onclick='$("#carteBDE,#info_carte_other").show();$("#other_carte").focus();$("#info_other").hide()' /><label for='other_bde' class='inline'>Inscrire quelqu'un par son numéro de carte</label><br /><br />
 
 
 						<input type='radio' name='who' id='other' onclick='$("#info_other").show();$("#other_name").focus();$("#carteBDE,#info_carte_other").hide()' /><label for='other' class='inline'>Inscrire quelqu'un d'autre</label>
@@ -140,15 +142,18 @@
 						foreach ($liste['liste'] as $art){
 							echo "
 								<div class='4u 12u$(medium) important(medium)'>
-									<h3>".$art['nom']."</h3>
-									Prix: ".$art['prix']."€<br />
+									<h3 id='name".$art['id']."'>".$art['nom']."</h3>
+									<a id='btn_cmd_".$art['id']."' class='button' onclick='commander(".$art['id'].")'>Ajouter (".$art['prix']."€)</a>
+									<a id='btn_suppr_".$art['id']."' class='button' onclick='suppr_cmd(".$art['id'].")' style='display:none'></a>
+									<div id='art".$art['id']."' style='display:none'>
 									Qté voulu: <input type='number' value='0' min='0' max='".$art['qte_dispo']."' id='qte".$art['id']."' /><br />
-									Commentaire <input type='text' id='comment".$art['id']."' placeholder='Allergies, demande particulière, etc.' /><br />
+									Commentaire 
+									</div><input type='text' id='comment".$art['id']."' style='display:none' placeholder='Aucun commentaire' /><br />
 								</div>
 							";
 						}				
 					?><div style='clear:both'></div>
-					<p><button onclick='$("#articles,#validation").toggle();show_commande(<?php echo $_GET['id']; ?>);'>Continuer</button></p>
+					<p><button onclick='$("#articles,#validation").toggle();show_commande(<?php echo $_GET['id']; ?>);'>Voir le panier</button></p>
 				</div>
 				<div id='validation' style='display:none;'>
 					<h3>Validation</h3>
@@ -171,10 +176,9 @@
 						?>
 					</div><div id='noCarteBDE'>Vous ne pouvez pas payer avec la carte BDE (solde insuffisant)</div>
 					    <?php echo "Solde actuel: ". solde($solde['solde']); ?>
-					<br /><em>En validant vous vous engagez à payer la somme due au club concerné (sauf en cas de paiement en ligne via carte BDE)</em>
-					<br /><em>Si vous payez par carte, vous serez débité lorsque le club concerné réclamera l'argent au BDE</em>
+					<br /> <br />
 					<br /><button onclick='$("#articles,#validation").toggle()'>Revenir en arrière</button>
-					<button onclick='valide_commande(<?php echo $_GET['id']; ?>)'>Valider</button>
+					<button onclick='valide_commande(<?php echo $_GET['id']; ?>)'>Passer la commande</button>
 					
 				</div>
 				</form>
@@ -185,3 +189,77 @@
 	
 	else echo "<h2>URL NON VALIDE !</h2>";
 ?>
+
+<script>
+	function commander(id){
+		name = $('#name22').html();
+		html = "<h2>"+name+"</h2><h3>Quantité:</h3>"
+		i = 0;
+		while (i<4){
+			i = i+1;
+			html = html + "<a class='button' onclick='add_article_commande("+id+","+i+")' style='display:inline-block; width: 54px;'>" + i + "</a> &nbsp;"
+		}
+		html += "<a class='button' onclick='add_article_commande("+id+", 0)' style='display:inline-block; width: 54px;'>+</a> &nbsp;"
+		html += "<br /><em>Vous pouvez ajouter un commentaire après avoir choisi la quantité.</em>"
+		popup(html);
+	}
+	function add_article_commande(id_art, qte){
+		if (qte==0){
+			popup("<h2>"+name+"</h2><h3>Quantité:</h3><form onsubmit='add_article_commande("+id_art+", -1);return false'><input id='qteplus'  type='number'/><a class='button' onclick='add_article_commande("+id_art+", -1)'>Continuer</a></form>")
+			$('#qteplus').focus()
+		}
+		if (qte==-1){
+			qte = $('#qteplus').val()
+		}
+		if(qte > 0){
+			$('#qte'+id_art).val(qte);
+			$('#btn_cmd_'+id_art).hide();
+			$('#btn_suppr_'+id_art).show();
+			$('#btn_suppr_'+id_art).html("Supprimer du panier ("+qte+" commandé(s))");
+			html = "<h2>"+name+" à été ajouté au panier</h2>"
+			html +="<form onsubmit='valide_com("+id_art+");return false'><input type='text' placeholder='Un commentaire ?' id='comm'/></form><a class='button' onclick='valide_com("+id_art+")'>Ajouter le commentaire</a><br /><a onclick='close_popup()'>Passer</a>"
+			popup(html)
+			$('#comm').focus()
+			$('#comment'+id_art).show()
+		}
+	}
+	function valide_com(id_art){
+		close_popup()
+		$('#comment'+id_art).val($('#comm').val())
+	}
+	
+	function suppr_cmd(id_art){
+		$('#btn_cmd_'+id_art).show();
+		$('#btn_suppr_'+id_art).hide();
+		$('#comment'+id_art).hide()
+		
+		$('#comment'+id_art).val("")
+		$('#qte'+id_art).val(0);
+	}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
