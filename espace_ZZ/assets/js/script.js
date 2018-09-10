@@ -1140,7 +1140,7 @@ function valide_commande(id_evt)
 			}
 			else {
 				fin_load();
-				popup_force_actualise("L'inscription est bien prise en compte !")
+				popup_force_actualise("<h2>L'inscription est bien prise en compte !</h1>Pour revoir la commande,  modifier ou annuler, il suffit de revenir sur cette page.")
 			}
 		   
 		});
