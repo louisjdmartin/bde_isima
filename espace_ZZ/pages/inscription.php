@@ -103,7 +103,8 @@
 									</tr>
 								";
 							}
-							echo "</table><button  onclick='annuler_inscription_evt(".$_GET['id'].")'>Annuler cette inscription</button><br /><hr /><br />";
+							echo "</table><button  onclick='annuler_inscription_evt(".$_GET['id'].")'>Annuler cette inscription</button>
+				<br /> <br /> <a class='button' href='./inscription'>S'inscrire pour un autre événement.</a><br /><hr /><br />";
 
 						 } ?>
 
