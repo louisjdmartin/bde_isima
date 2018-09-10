@@ -192,7 +192,7 @@
 
 <script>
 	function commander(id){
-		name = $('#name22').html();
+		name = $('#name'+id).html();
 		html = "<h2>"+name+"</h2><h3>Quantité:</h3>"
 		i = 0;
 		while (i<4){
@@ -204,6 +204,7 @@
 		popup(html);
 	}
 	function add_article_commande(id_art, qte){
+		name = $('#name'+id_art).html();
 		if (qte==0){
 			popup("<h2>"+name+"</h2><h3>Quantité:</h3><form onsubmit='add_article_commande("+id_art+", -1);return false'><input id='qteplus'  type='number'/><a class='button' onclick='add_article_commande("+id_art+", -1)'>Continuer</a></form>")
 			$('#qteplus').focus()
@@ -215,7 +216,7 @@
 			$('#qte'+id_art).val(qte);
 			$('#btn_cmd_'+id_art).hide();
 			$('#btn_suppr_'+id_art).show();
-			$('#btn_suppr_'+id_art).html("Supprimer du panier ("+qte+" commandé(s))");
+			$('#btn_suppr_'+id_art).html("Supprimer du panier <br />("+qte+" commandé(s))");
 			html = "<h2>"+name+" à été ajouté au panier</h2>"
 			html +="<form onsubmit='valide_com("+id_art+");return false'><input type='text' placeholder='Un commentaire ?' id='comm'/></form><a class='button' onclick='valide_com("+id_art+")'>Ajouter le commentaire</a><br /><a onclick='close_popup()'>Passer</a>"
 			popup(html)
