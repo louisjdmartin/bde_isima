@@ -9,7 +9,7 @@
 		else foreach($liste['liste'] as $evt)
 		{
 			$club = api("get_club", array("id" => $evt['id_club']))['liste'][0];
-			
+			$inscrit = api("evt_deja_inscrit", array("token" => $_COOKIE['token'],"id_evt"=>$evt['id']));
 			
 			echo "
 			<div class='4u 12u$(medium) important(medium)'>
@@ -17,7 +17,7 @@
 				Organisé par ".$club['nom']."<br />
 				Date événement: ".date_joli(strtotime($evt['date_event']))."<br />
 				Inscription avant: ".date_joli(strtotime($evt['date_limite_commande']))."<br />
-				<a class='button' href='./inscription.".$evt['id']."'>S'inscrire</a>
+				<a class='button' href='./inscription.".$evt['id']."'>".(($inscrit['bool']) ? "Modifier l'inscription" : "S'inscrire")."</a>
 			</div>
 			";
 		}
