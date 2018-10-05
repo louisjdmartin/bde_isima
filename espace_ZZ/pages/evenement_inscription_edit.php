@@ -26,7 +26,7 @@
 			foreach($liste['liste'] as $e){
 				if(!in_array($e['id_art'],$already_used)){
 					$already_used[] = $e['id_art'];
-					echo "<strong>Poids ".$e['nom_article']."</strong><input type='number' id='art".$e['id_art']."' value='1' min='1'><br />";
+					echo "<strong>Poids ".str_replace('"', "''",$e['nom_article'])."</strong><input type='number' id='art".$e['id_art']."' value='1' min='1'><br />";
 				}			
 			}
 		?></form><a class='button' onclick='redirect_print_tombola()'>Imprimer tickets de tombola</a>");
