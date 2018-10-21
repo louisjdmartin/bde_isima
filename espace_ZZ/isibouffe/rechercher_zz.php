@@ -5,7 +5,7 @@
 //POUVOIR EXTRAIRE UN PDF DES RESULTATS
 
 if(isset($_GET['success']))
-	if($_GET['success']>0)echo "<div style='background-color:grey;color:white;padding:16px;'>Vous avez bien encaissé ".$_GET['success']." articles et le nouveau solde est de ".$_GET['solde']." euros.</div>";
+	if($_GET['success']>0)echo "<div style='background-color:grey;color:white;padding:16px;'>Vous avez bien encaissé ".$_GET['success']." article(s) et le nouveau solde est de ".$_GET['solde']." euros.</div>";
 	else echo "<div style='background-color:grey;color:white;padding:16px;'>Vous avez bien rechargé, le nouveau solde est de ".$_GET['solde']." euros.</div>";
 ?>
 
