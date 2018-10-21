@@ -30,6 +30,7 @@ $info_zz = $donnees->query('SELECT * FROM isibouffe_zz ORDER BY promo, nom');
 			
 			<th class="text-left">Promo</th>
 			<th class="text-left">Solde</th>
+			<th class="text-left">Effacer</th>
 		</tr>
 	</thead>
 	<tbody class="table-hover">
@@ -51,6 +52,7 @@ while ($donnees = $info_zz->fetch())
 			
 			<td class="text-left"><?php echo $donnees['promo']?></td>
 			<td class="text-left"><?php echo $donnees['solde']?></td>
+			<td class="text-left"><a href="suppr.php?mode=zz&id=<?php echo $donnees['id']?>">Effacer</a></td>
 		</tr>
 
 

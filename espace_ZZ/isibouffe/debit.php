@@ -51,7 +51,7 @@ $donnees->query('INSERT INTO isibouffe_historique (id_zz,solde,id_article,quanti
 
 $info_zz->closeCursor();
 
-header("location:rechercher_zz.php?id_zz=".$_GET['id_zz']);
+header("location:rechercher_zz.php?success=".$_GET['quantite']."&solde=".$nouveau_solde);
 
 
 ?>

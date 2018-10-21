@@ -4,7 +4,9 @@
 
 //POUVOIR EXTRAIRE UN PDF DES RESULTATS
 
-
+if(isset($_GET['success']))
+	if($_GET['success']>0)echo "<div style='background-color:grey;color:white;padding:16px;'>Vous avez bien encaissé ".$_GET['success']." articles et le nouveau solde est de ".$_GET['solde']." euros.</div>";
+	else echo "<div style='background-color:grey;color:white;padding:16px;'>Vous avez bien rechargé, le nouveau solde est de ".$_GET['solde']." euros.</div>";
 ?>
 
 	
@@ -17,7 +19,7 @@
 		
 					<h2>Rechercher un zz</h2>
 					<form>
-						<input name="zz" placeholder="ZZ">
+						<input name="zz" placeholder="ZZ" autofocus>
 						<input type="submit" value="Valider"><br><br>
 	
 						<input name="promo" placeholder="Promo">
@@ -51,15 +53,15 @@
 
 
 				$info_zz = $donnees->query('SELECT * FROM isibouffe_zz WHERE '.$conditions);
-				
+				$count = 0;
 				while ($info4 = $info_zz->fetch())
 
-				{
+				{$count++;$id=$info4['id'];
 	
 			?>
 
 
-		
+				   <div style='margin-left:24px'>
 						<a class="lien" href='zz.php?id_zz=<?php echo $info4['id']; ?>'> <!-- on créé un lien -->
 
 
@@ -112,7 +114,7 @@
 	
 				$info_zz->closeCursor();
 			}
-			
+			if($count==1)echo "<script>window.location='./zz.php?id_zz=$id'</script>";
 		
 			?>
 			

@@ -1,7 +1,6 @@
 <?php
 
-require 'fonctions.php';
-include "menu.php";
+require 'header.html';
 //on est sur le profil du zz
 
 
@@ -53,7 +52,7 @@ $info_zz->closeCursor();
 
 	<form action="credit.php" method="GET"><br>
 	
-		Ajouter : <input name="ajout" type='float'> €<br><br>
+		Recharger : <input name="ajout" type='float'> €<br><br>
 		<input name="id_zz" type="hidden" value=<?php echo $_GET['id_zz']; ?> ><br><br>
 
 
@@ -67,7 +66,7 @@ $info_zz->closeCursor();
 
 //afficher la liste des article avec une case quantité à remplir et le prix
 
-$all_article = $donnees->query('SELECT * FROM isibouffe_article');
+$all_article = $donnees->query('SELECT * FROM isibouffe_article ORDER BY id_article DESC');
 
 
 
@@ -89,7 +88,12 @@ while ($info77 = $all_article->fetch())
 
 	<form action="debit.php" method="GET">
 
-		quantité : <input name="quantite" type='number'>
+		quantité : 
+		<a class='lien' href='debit.php?quantite=1&id_zz=<?php echo $_GET['id_zz']; ?>&id_article=<?php echo $info77['id_article']; ?>'>1</a>
+		<a class='lien' href='debit.php?quantite=2&id_zz=<?php echo $_GET['id_zz']; ?>&id_article=<?php echo $info77['id_article']; ?>'>2</a>
+		<a class='lien' href='debit.php?quantite=3&id_zz=<?php echo $_GET['id_zz']; ?>&id_article=<?php echo $info77['id_article']; ?>'>3</a>
+		<a class='lien' href='debit.php?quantite=4&id_zz=<?php echo $_GET['id_zz']; ?>&id_article=<?php echo $info77['id_article']; ?>'>4</a>
+		<input name="quantite" type='number' placeholder="Autre qte">
 		<input name="id_zz" type="hidden" value=<?php echo $_GET['id_zz']; ?> >
 		<input name="id_article" type="hidden" value=<?php echo $info77['id_article']; ?> >
 
@@ -114,6 +118,45 @@ $all_article->closeCursor(); // Termine le traitement de la requête
 
 //afficher les recharges -> fonctionne
 				?>
+
+				<br /><br /><strong>Consos :</strong>
+
+
+<?php
+
+				//afficher l'historique du zz
+					
+				
+				
+					$info_hist = $donnees->query('SELECT * FROM isibouffe_historique, isibouffe_article WHERE isibouffe_historique.id_zz='.$_GET['id_zz'].' AND isibouffe_historique.id_article=isibouffe_article.id_article' );
+		
+					
+
+					while ($info5=$info_hist->fetch())
+
+					{
+					?>
+
+						<div class="zz">
+						<br />	
+
+							<i><?php echo $info5['date'];?></i><br />						
+
+							<?php echo $info5['quantite']; ?>  <?php echo $info5['nom_article']; ?> à <?php echo $info5['prix_article']; ?> €<br />
+				
+							<strong>Solde</strong> : <?php echo $info5['solde']; ?> €<br />	
+		
+						<br />	
+					   </div>
+
+					<?php
+
+					}$info_hist->closeCursor();
+		
+			?>
+
+
+
 				<br /><br /><strong>Recharges :</strong>
 				<?php
 				

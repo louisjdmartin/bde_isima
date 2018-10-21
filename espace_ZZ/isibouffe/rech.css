@@ -1,6 +1,6 @@
 .form-style-8{
     font-family: 'Open Sans Condensed', arial, sans;
-    width: 500px;
+    width: auto;
     padding: 30px;
     background: #FFFFFF;
     margin: 50px auto;
@@ -79,11 +79,13 @@
 }
 
 
-
-
-
-
-
+.zz{
+	margin-left:32px;
+	padding-left: 32px;
+	border-left:1px dotted black;
+	margin-top:0;
+	margin-bottom:0;
+}
 
 
 
