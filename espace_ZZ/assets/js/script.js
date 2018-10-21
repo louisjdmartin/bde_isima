@@ -146,7 +146,7 @@ function get_all_recharges_isibouffe()
 			
 			html = html + " le " + data.liste[i].date + "</li>";
 		}
-		html = html + "</ul>";
+		html = html + "</ul><em>Si votre compte isibouffe à été créé sur l'ancienne version du site du BDE, le début de votre historique est perdu. Le solde n'a pas été perdu lors de la migration. Si besoin allez voir le trésorier.</em>";
 		$('#popup').html(html);
 	});
 }
