@@ -39,8 +39,8 @@
 					<a href="#">Accès ZZ</a>
 					<ul>
 						<li><a href="carte">Carte BDE</a></li>
+						<li><a href="carteisibouffe">Carte ISIBOUFFE</a></li>
 						<li><a href="javascript:virement_choix_carte()" onclick='virement_choix_carte()'>Envoyer de l'argent</a></li>
-						<li><a href="solde_isibouffe">Carte ISIBOUFFE</a></li>
 						<li><a href="inscription">S'inscrire à un événement</a></li>
 						<li><a href="records">Records du BDE</a></li>
 						<li><a href="articlesbde">Articles en vente au BDE</a>

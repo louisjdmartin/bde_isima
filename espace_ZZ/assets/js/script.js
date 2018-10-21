@@ -135,6 +135,21 @@ function get_all_recharges(numero)
 		$('#popup').html(html);
 	});
 }
+function get_all_recharges_isibouffe()
+{
+	popup("<h3>Chargement...</h3><ul id='liste_recharges'></ul>");
+	$.getJSON('../api/ajax/get_log_recharges_isibouffe', {nombre: 1000, token: $('#token').val()}).done(function(data){
+		html = "<h3>Historique</h3><ul id='liste_recharges'>";
+		for(i=0;i<data.nb_elt;i++){
+			if(data.liste[i].montant>0)html = html + '<li><span style="display:inline-block;width:64px;color:green">+'+data.liste[i].montant+'€</span>';
+			if(data.liste[i].montant<0)html = html + '<li><span style="display:inline-block;width:64px;color:red">'+data.liste[i].montant+'€</span>';
+			
+			html = html + " le " + data.liste[i].date + "</li>";
+		}
+		html = html + "</ul>";
+		$('#popup').html(html);
+	});
+}
 function get_all_consos(numero)
 {
 	popup("<h3>Chargement...</h3><ul id='liste_recharges'></ul>");
