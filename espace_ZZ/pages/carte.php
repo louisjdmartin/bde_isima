@@ -34,7 +34,9 @@
 						<input type="text" id="carte" name="recherche" placeholder="Rechercher" required autofocus autocomplete="off" />
 						<div id="resultats"></div>
 					</form>
-				<?php } ?> 
+				<?php } ?>
+					<br /><a href='carteisibouffe'>Voir ma carte isibouffe</a>
+
 			</p>
 		</div>
 		<div class="4u 12u$(medium)">

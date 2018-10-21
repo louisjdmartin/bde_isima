@@ -4,6 +4,7 @@
 	require "../api/api.php";
 	$pages = array(
 		"carte" => "Cartes BDE",
+		"carteisibouffe" => "Cartes ISIBOUFFE",
 		"articles" => "Gestion des articles",
 		"statistiques"=> "Statistiques",
 		"change_pwd" => "Changer son mot de passe",

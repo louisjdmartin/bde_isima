@@ -21,7 +21,7 @@ function get_nom_by_carte($settings, $objets){
 	$nom = $bdd->query("SELECT nom, prenom, surnom FROM membres WHERE numero = '".addslashes($settings['numero'])."'");
 	foreach($nom as $n)
 	{
-		$retour = utf8_encode($n['prenom']) . "  " . utf8_encode($n['nom']);
+		$retour = utf8_encode($n['prenom']) . " " . utf8_encode($n['nom']);
 		if($n['surnom']!=NULL)$retour .= " (" . utf8_encode($n['surnom']) .")";
 	}
 	
