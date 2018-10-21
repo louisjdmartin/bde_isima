@@ -1,5 +1,5 @@
 <?php include "header.html";
-
+$count = 0;
 // RECHERCHE UN ZZ EN TAPANT SON NOM, PRENOM, SURNOM OU UNE PARTIE -> FONCTIONNE
 
 //POUVOIR EXTRAIRE UN PDF DES RESULTATS
@@ -53,7 +53,7 @@ if(isset($_GET['success']))
 
 
 				$info_zz = $donnees->query('SELECT * FROM isibouffe_zz WHERE '.$conditions);
-				$count = 0;
+				
 				while ($info4 = $info_zz->fetch())
 
 				{$count++;$id=$info4['id'];
