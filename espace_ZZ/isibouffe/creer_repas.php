@@ -34,7 +34,7 @@ while ($donnees = $all_article->fetch())
 {
 ?>
  	<p>
-
+		<a href='suppr.php?mode=art&id=<?php echo $donnees['id_article']; ?>'>[Effacer] </a>
 		<strong><?php echo $donnees['nom_article']; ?></strong>
 		<?php echo $donnees['prix_article']; ?> €
 	</p>

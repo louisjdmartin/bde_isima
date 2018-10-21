@@ -38,6 +38,6 @@ $donnees->query('INSERT INTO isibouffe_hist_recharges (id_zz,recharge) VALUES ("
 
 $info_zz->closeCursor();
 
-header("location:rechercher_zz.php?id_zz=".$_GET['id_zz']);
+header("location:rechercher_zz.php?success=-1&solde=".$nouveau_solde);
 
 ?>
