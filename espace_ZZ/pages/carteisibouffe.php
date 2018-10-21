@@ -5,7 +5,7 @@
 ?>
 <script>
 	function associer_isibouffe(onlyone){
-		popup("<h3></h3>\
+		popup("<h3>Associer ma carte isibouffe</h3>\
 				<form onsubmit='return false;'><input onkeyup='search_carte(false)' type='text' id='search' autofocus placeholder='Rechercher une carte'/><input onclick='search_carte(false)' type='submit' value='Chercher'/></form><div id='search_results'>");	
 		$.post("../api/ajax/get_nom_by_carte",{numero:<?php echo $carte;?>, token:$('#token').val()}).done(function(data){
 			data=JSON.parse(data);
@@ -94,14 +94,11 @@
 				<a onclick="get_all_consos(<?= $carte; ?>); return false;" href="#">Voir tout</a>-->
 		</div>
 		<div class="4u 12u$(medium)">
-			<h3>Recharges</h3><em>Bientôt dispo...</em><!--
+			<h3>Recharges</h3>
 				<ul id="ul_recharge">
 					
 					<?php 
-						if(isset($user['autorisations']['bde']))
-							$recharges = api("get_log_recharges", array("token" => $_SESSION['token'], "numero" => $carte));
-						else 
-							$recharges = api("get_log_recharges", array("token" => $_SESSION['token']));
+						$recharges = api("get_log_recharges_isibouffe", array("token" => $_SESSION['token']));
 						
 						
 						if($recharges['nb_elt']>0)foreach ($recharges['liste'] as $r) 
@@ -111,7 +108,7 @@
 					?>
 					
 				</ul>
-				<a onclick="get_all_recharges(<?= $carte; ?>); return false;" href="#">Voir tout</a>-->
+				<a onclick="get_all_recharges_isibouffe(<?= $carte; ?>); return false;" href="#">Voir tout</a>
 		</div>
 	</div>
 </article>
