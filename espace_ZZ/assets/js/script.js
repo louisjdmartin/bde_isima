@@ -165,6 +165,21 @@ function get_all_consos(numero)
 		html = html + "</ul>";
 		$('#popup').html(html);
 	});
+}function get_all_consos_isibouffe(numero)
+{
+	popup("<h3>Chargement...</h3><ul id='liste_recharges'></ul>");
+	$.getJSON('../api/ajax/get_log_consos_isibouffe', {nombre: 1000, token: $('#token').val(), numero:numero}).done(function(data){
+		html = "<h3>Historique</h3><ul id='liste_recharges'>";
+		for(i=0;i<data.nb_elt;i++){
+			html = html + '<li><span style="display:inline-block;width:64px;color:red">-'+data.liste[i].tarif+'€</span>';
+			
+			html = html + data.liste[i].article + " le " + data.liste[i].date ;
+			if(data.liste[i].anciensolde>0)html = html + " (ancien solde:  <span style='display:inline-block;color:green'>" + data.liste[i].anciensolde+"€</span>)</li>";
+			if(data.liste[i].anciensolde<0)html = html + " (ancien solde: <span style='display:inline-block;color:red'>" + data.liste[i].anciensolde+"€</span>)</li>";
+		}
+		html = html + "</ul>";
+		$('#popup').html(html);
+	});
 }
 
 function get_all_articles(numero){

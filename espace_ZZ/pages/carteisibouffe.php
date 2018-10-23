@@ -71,14 +71,11 @@
 				<?php  } ?>
 		</div>
 		<div class="4u 12u$(medium)">
-			<h3>Consommations</h3><em>Bientôt dispo...</em>
-				<!--<ul id="ul_consos">
+			<h3>Consommations</h3>
+				<ul id="ul_consos">
 					
 					<?php 
-						if(isset($user['autorisations']['bde']))
-							$consos = api("get_log_consos", array("token" => $_SESSION['token'], "numero" => $carte, "nombre" => 5));
-						else 
-							$consos = api("get_log_consos", array("token" => $_SESSION['token'], "nombre" => 5));
+						$consos = api("get_log_consos_isibouffe", array("token" => $_SESSION['token'], "nombre" => 5));
 						
 						
 						if($consos['nb_elt']>0)foreach ($consos['liste'] as $r) 
@@ -91,7 +88,7 @@
 					?>
 					
 				</ul>
-				<a onclick="get_all_consos(<?= $carte; ?>); return false;" href="#">Voir tout</a>-->
+				<a onclick="get_all_consos_isibouffe(<?= $carte; ?>); return false;" href="#">Voir tout</a>
 		</div>
 		<div class="4u 12u$(medium)">
 			<h3>Recharges</h3>
