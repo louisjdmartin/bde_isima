@@ -73,7 +73,10 @@
 				<ul id="ul_recharge">
 					
 					<?php 
-						$recharges = api("get_log_recharges_isibouffe", array("token" => $_SESSION['token']));
+						if(isset($user['autorisations']['bde']))
+							$recharges = api("get_log_recharges", array("token" => $_SESSION['token'], "numero" => $carte));
+						else 
+							$recharges = api("get_log_recharges", array("token" => $_SESSION['token']));
 						
 						
 						if($recharges['nb_elt']>0)foreach ($recharges['liste'] as $r) 
