@@ -109,7 +109,11 @@ function load(){
 	        "https://bde.isima.fr/easter_eggs/franck_romane.gif",
 		"https://bde.isima.fr/easter_eggs/listeux/memelisteux1.jpg",
 		"https://bde.isima.fr/easter_eggs/listeux/memelisteux2.jpg",
-		"https://bde.isima.fr/easter_eggs/listeux/memelisteux3.jpg"
+		"https://bde.isima.fr/easter_eggs/listeux/memelisteux3.jpg",
+                "https://bde.isima.fr/easter_eggs/listeux/memelisteux4.jpg",
+                "https://bde.isima.fr/easter_eggs/listeux/memelisteux5.jpg",
+                "https://bde.isima.fr/easter_eggs/listeux/memelisteux6.jpg"
+
 	];
 	gn = getRandomInt(0,(gifs.length)-1);
 	$('.gif_load').html("<img src='"+gifs[gn]+"' alt='load' style='max-width:100%'/>");
