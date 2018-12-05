@@ -96,10 +96,9 @@ function load(){
 		"https://media.giphy.com/media/8ErHYXFsA9QsM/giphy.gif",
 		"https://media.giphy.com/media/110gqI69qjVAkM/giphy.gif",
 		"https://media.giphy.com/media/tCAsXsOGeIcgM/giphy.gif",
-		"http://media.giphy.com/media/6t4gwsSh4BQfm/giphy.gif",
+		"https://media.giphy.com/media/6t4gwsSh4BQfm/giphy.gif",
 		"https://media.giphy.com/media/kTZBUjdRlZB3G/giphy.gif",
 		"https://media.giphy.com/media/bxVA5CqJ5iVLq/giphy.gif",
-		"https://m.popkey.co/8618d2/DyVJx.gif",
 		"https://media.giphy.com/media/3osBLvEDEgSfQ7l3EY/giphy.gif",
 		"https://media.giphy.com/media/3osBLvEDEgSfQ7l3EY/giphy.gif",
 		"https://media.giphy.com/media/3osBLvEDEgSfQ7l3EY/giphy.gif",
@@ -112,7 +111,11 @@ function load(){
 		"https://bde.isima.fr/easter_eggs/listeux/memelisteux3.jpg",
                 "https://bde.isima.fr/easter_eggs/listeux/memelisteux4.jpg",
                 "https://bde.isima.fr/easter_eggs/listeux/memelisteux5.jpg",
-                "https://bde.isima.fr/easter_eggs/listeux/memelisteux6.jpg"
+                "https://bde.isima.fr/easter_eggs/listeux/memelisteux6.jpg",
+		"https://bde.isima.fr/easter_eggs/listeux/memelisteux7.jpg",
+                "https://bde.isima.fr/easter_eggs/listeux/memelisteux8.jpg",
+                "https://bde.isima.fr/easter_eggs/listeux/memelisteux9.jpg"
+
 
 	];
 	gn = getRandomInt(0,(gifs.length)-1);
