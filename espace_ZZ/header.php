@@ -78,7 +78,7 @@
 				<li>
 					<a href="#">Accès BDE</a>
 					<ul>
-				        <li><a href="https://planning-maker.000webhostapp.com/">Planning Maker</a></li>
+				        <li><a href="../planning_maker">Planning Maker</a></li>
 						<li><a href="articles">Gestion des articles</a></li>
 						<li><a href="membres">Gestion des membres</a></li>
 						<li><a href="gestion_clubs">Gestion des clubs</a></li>
