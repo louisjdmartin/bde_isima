@@ -325,7 +325,7 @@ function edit_article(id, nom, img, tarif, tarif_nc)
 	<div id='progress' class='progress'><div class='progress-bar progress-bar-success'></div></div>\
 	<label for='nom_art'>Nom</label><input value='"+nom+"'  type='text' id='nom_art' />\
 	<label for='tarif_art'>Tarif</label><input value='"+tarif+"'  type='text' id='tarif_art' />\
-	<label for='tarif_art_nc'>Tarif</label><input value='"+tarif_nc+"'  type='text' id='tarif_art_nc' />\
+	<label for='tarif_art_nc'>Tarif non cotisants</label><input value='"+tarif_nc+"'  type='text' id='tarif_art_nc' />\
 	<a style='float:right' class='button' href='#' onclick='valide_article()'>Sauvegarder</a>&nbsp;\
 	"+efface_button+"\
 	</form>\

@@ -15,6 +15,7 @@
 					<th>Image</th>
 					<th>Nom</th>
 					<th>Prix</th>
+					<th>Prix non cotisants</th>
 					<th></th>
 				</tr>
 		";
@@ -26,6 +27,7 @@
 					<td style='width:32px;text-align:center'><img style='height:32px;' src='".$art['img']."' /></td>
 					<td>".$art['nom']."</td>
 					<td style='width:64px;text-align:center'>".$art['tarif']." €</td>
+					<td style='width:64px;text-align:center'>".$art['tarif_nc']." €</td>
 					<td style='width:128px;text-align:center' onclick='edit_article(".$art['id']." , \"".$art['nom']."\", \"".$art['img']."\", \"".$art['tarif']."\", \"".$art['tarif_nc']."\")'><button>Editer</button></td>
 				</tr>
 			";
