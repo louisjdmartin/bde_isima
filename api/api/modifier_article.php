@@ -24,7 +24,8 @@ function modifier_article($settings, $objets){
 	if($settings['id']=="0"){
 		// Ajout
 		if(!is_numeric($settings['tarif']))return (array("error" => 1, "msg" => "Le tarif n'est pas numérique !"));
-		$bdd->query("INSERT INTO articles VALUES(NULL, '".utf8_decode(addslashes($settings['nom']))."', '".$settings['tarif']."', '".addslashes($settings['img'])."')");
+                if(!is_numeric($settings['tarif_nc']))return (array("error" => 1, "msg" => "Le tarif n'est pas numérique !"));
+		$bdd->query("INSERT INTO articles VALUES(NULL, '".utf8_decode(addslashes($settings['nom']))."', '".$settings['tarif']."', '".$settings['tarif_nc']."', '".addslashes($settings['img'])."')");
 		$retour = array("error" => 0);
 	}
 	else{
@@ -40,6 +41,7 @@ function modifier_article($settings, $objets){
 			$bdd->query("UPDATE articles SET img='".addslashes($settings['img'])."' WHERE id=".$settings['id']);
 			$bdd->query("UPDATE articles SET tarif='".addslashes($settings['tarif'])."' WHERE id=".$settings['id']);
 			$bdd->query("UPDATE articles SET nom='".utf8_decode(addslashes($settings['nom']))."' WHERE id=".$settings['id']);
+			$bdd->query("UPDATE articles SET tarif_non_cotisant='".addslashes($settings['tarif_nc'])."' WHERE id=".$settings['id']);
 			$retour = array("error" => 0);
 		}
 	}

@@ -314,7 +314,7 @@ function cherche_carte_other(){
 	});
 	else $('#resultats').html("");
 }
-function edit_article(id, nom, img, tarif)
+function edit_article(id, nom, img, tarif, tarif_nc)
 {
 	if(id==0)efface_button="";
 	else efface_button = "<a style='float:left' class='button' href='#' onclick='$(\"#nom_art\").val(\"\");valide_article();'>Effacer</a>";
@@ -325,7 +325,7 @@ function edit_article(id, nom, img, tarif)
 	<div id='progress' class='progress'><div class='progress-bar progress-bar-success'></div></div>\
 	<label for='nom_art'>Nom</label><input value='"+nom+"'  type='text' id='nom_art' />\
 	<label for='tarif_art'>Tarif</label><input value='"+tarif+"'  type='text' id='tarif_art' />\
-	\
+	<label for='tarif_art_nc'>Tarif</label><input value='"+tarif_nc+"'  type='text' id='tarif_art_nc' />\
 	<a style='float:right' class='button' href='#' onclick='valide_article()'>Sauvegarder</a>&nbsp;\
 	"+efface_button+"\
 	</form>\
@@ -497,7 +497,7 @@ function maj_cotisation(){
 function valide_article()
 {
 	load();
-	$.getJSON('../api/ajax/modifier_article', {id: $('#id_art').val(), img:$('#img_art').val(), tarif: $('#tarif_art').val(),nom: $('#nom_art').val(), token: $('#token').val()}, function(data){
+	$.getJSON('../api/ajax/modifier_article', {id: $('#id_art').val(), img:$('#img_art').val(), tarif: $('#tarif_art').val(), tarif_nc: $('#tarif_art_nc').val() ,nom: $('#nom_art').val(), token: $('#token').val()}, function(data){
 		if(data.error==0)
 		{
 			window.location.reload();
@@ -997,7 +997,56 @@ function add_evt(id_club)
 
 }
 
+function add_evt_direct(id_club)
+{
+	popup("<h3>Ajouter un événement avec inscription</h3> \
+	<form onsubmit='return false'>\
+	<label>Nom de l'événement</label>\
+	<input type='text' id='nom_event' />\
+	<label>Places disponibles (0=infini)</label>\
+	<input type='number' id='places_event' value='0' step='1' />\
+	<label>Paiement par carte BDE autorisé</label>\
+	<input type='radio' id='carte_bde_event' name='carte_bde_event' value='0' checked />Non\
+	<input type='radio' id='carte_bde_event_true' name='carte_bde_event' value='1' />Oui\
+	<label>Date</label>\
+	<input style='width:48%; display:inline;' type='text' id='event_deb'  placeholder='Date limite inscription' />\
+	\
+	<input style='width:48%; display:inline;' type='text' id='event_fin' disabled placeholder='Date événement' />\
+	<br /><button style='float:right' onclick='valide_add_evt("+id_club+");' id='valide_btn'>Suivant</button><button style='float:right' id='valide_btn_load'>Chargement...</button>");
 
+	$('#nom_event').focus();
+	$('#event_deb').val()
+	$.timepicker.setDefaults($.timepicker.regional['fr']);
+	var endDateTextBox = $('#event_deb');
+	endDateTextBox.datetimepicker({ 
+		controlType: 'select',
+		dateFormat: "yy-mm-dd",
+		stepMinute: 1,
+		numberOfMonths: 1,
+		firstDay: 1,
+		minDate: new Date(),
+		oneLine: true,
+	});
+	
+	var today = new Date();
+	var dd = today.getDate();
+
+	var mm = today.getMonth()+1; 
+	var yyyy = today.getFullYear();
+	if(dd<10) 
+	{
+		dd='0'+dd;
+	} 
+
+	if(mm<10) 
+	{
+		mm='0'+mm;
+	} 
+	today = dd+'-'+mm+'-'+yyyy+' 00:00:00';
+	$('#event_fin').val(today)
+	$('#valide_btn_load').hide();
+
+}
 function valide_add_evt(id_club){
 	if($("#event_deb").val() == "" || $("#event_fin").val() == "" || $("#nom_event").val() == "")
 		return alert("Formulaire incomplet !");
@@ -1166,8 +1215,7 @@ function valide_commande(id_evt)
 			other_name = "";
 		}
 
-		if(data.solde<total){cartebde=0}
-		else if(document.getElementById('bde') && $('#bde').is(':checked'))cartebde=1;
+		if(document.getElementById('bde') && $('#bde').is(':checked'))cartebde=1;
 		else cartebde=0;
 
 

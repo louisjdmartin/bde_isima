@@ -27,6 +27,7 @@ function get_liste_articles($settings, $objets){
 			"id" => $r['id'],
 			"nom" => utf8_encode($r['nom']),
 			"tarif" => utf8_encode($r['tarif']),
+			"tarif_nc" => utf8_encode($r['tarif_non_cotisant']),
 			"img" => $img
 		);
 		$retour["nb_elt"]++;
