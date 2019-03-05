@@ -8,7 +8,7 @@
 	{
 		$articles = api("get_liste_articles");
 		echo "
-			<button onclick='edit_article(0, \"\", \"\", \"\")'>Ajouter un article</button>
+			<button onclick='edit_article(0, \"\", \"\", \"\", \"\")'>Ajouter un article</button>
 			<table style='width:100%'>
 				<tr>
 					<th>#</th>
@@ -26,7 +26,7 @@
 					<td style='width:32px;text-align:center'><img style='height:32px;' src='".$art['img']."' /></td>
 					<td>".$art['nom']."</td>
 					<td style='width:64px;text-align:center'>".$art['tarif']." €</td>
-					<td style='width:128px;text-align:center' onclick='edit_article(".$art['id']." , \"".$art['nom']."\", \"".$art['img']."\", \"".$art['tarif']."\")'><button>Editer</button></td>
+					<td style='width:128px;text-align:center' onclick='edit_article(".$art['id']." , \"".$art['nom']."\", \"".$art['img']."\", \"".$art['tarif']."\", \"".$art['tarif_nc']."\")'><button>Editer</button></td>
 				</tr>
 			";
 		}
