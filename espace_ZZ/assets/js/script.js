@@ -164,9 +164,9 @@ function get_all_consos(numero)
 {
 	popup("<h3>Chargement...</h3><ul id='liste_recharges'></ul>");
 	$.getJSON('../api/ajax/get_log_consos', {nombre: 1000, token: $('#token').val(), numero:numero}).done(function(data){
-		html = "<h3>Historique</h3><ul id='liste_recharges'>";
+		html = "<h3>Historique</h3><ul id='liste_recharges'><em>Tarif non cotisant entre parenthèse</em><br />";
 		for(i=0;i<data.nb_elt;i++){
-			html = html + '<li><span style="display:inline-block;width:64px;color:red">-'+data.liste[i].tarif+'€</span>';
+			html = html + '<li><span style="display:inline-block;width:128px;color:red">-'+data.liste[i].tarif+'€ ('+data.liste[i].tarif_nc+'€)</span>';
 			
 			html = html + data.liste[i].article + " le " + data.liste[i].date ;
 			if(data.liste[i].anciensolde>0)html = html + " (ancien solde:  <span style='display:inline-block;color:green'>" + data.liste[i].anciensolde+"€</span>)</li>";
@@ -199,7 +199,9 @@ function get_all_articles(numero){
 	$.getJSON('../api/ajax/get_liste_articles',{token:$('#token').val()}).done(function(data){
 		html = "<h3>Encaisser sur la carte <a onclick='autre_carte();return false;' href='#' style='text-decoration:underline'>"+numero+"</a> /  <a onclick='recharge("+numero+");return false;' href='#' style='text-decoration:underline'>Recharger</a></h3><form onsubmit='return false'><input id='fast_search' type='text' placeholder='Recherche rapide article' /></form><div id='liste_articles'>";
 		for(i=0;i<data.nb_elt;i++){
-			html = html + '<span class="article" onclick="encaisser('+numero+', '+data.liste[i].id+')"><img src="'+data.liste[i].img+'" /><br />'+data.liste[i].nom+' ('+data.liste[i].tarif+'€)</span>';
+			tarif = data.liste[i].tarif;
+			if($('#is_cotisant').val()=="0")tarif = data.liste[i].tarif_nc;
+			html = html + '<span class="article" onclick="encaisser('+numero+', '+data.liste[i].id+')"><img src="'+data.liste[i].img+'" /><br />'+data.liste[i].nom+' ('+tarif+'€)</span>';
 			
 		}
 		html = html + "</div>";

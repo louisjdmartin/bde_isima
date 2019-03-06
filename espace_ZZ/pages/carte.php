@@ -63,6 +63,7 @@
 					?>
 					
 				</ul>
+				<em>Les tarifs affichés ne prennent pas en compte la majoration non cotisants.</em>
 				<a onclick="get_all_consos(<?= $carte; ?>); return false;" href="#">Voir tout</a>
 		</div>
 		<div class="4u 12u$(medium)">

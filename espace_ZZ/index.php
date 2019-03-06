@@ -168,12 +168,12 @@
 			<?php if(isset($_GET['fast_add_articles']) and $solde['cotisation']!=annee_scolaire() and isset($user['autorisations']['bde'])) { ?>
 				<script>
 					popup("<h3>ATTENTION ! COTISATION NON PAY&Eacute;E  !</h3>Dernière cotisation: <?php echo ($solde['cotisation']-1).' - '.$solde['cotisation']; ?><br />Année en cours: <?php echo (annee_scolaire()-1).' - '.annee_scolaire(); ?><br /><br /><em style='font-size:80%'>Pour mettre à jour la cotisation (voir avec Trésorier): <br /><a href='membres'>Gestion membre</a> -> Editer -> mettre à jour la cotisation -> Sauvegarder</em><br /><br /><a href='#' onclick='recharge(<?= $carte; ?>)'>Recharger</a> / <a href='#' onclick='get_all_articles(<?= $carte; ?>)'>Encaisser article</a> ");
-				</script>
+				</script><input type="hidden" id="is_cotisant" value="0" />
 			<?php } 
 			else if(isset($_GET['fast_add_articles']) and $solde['solde']>0 and isset($user['autorisations']['bde'])) { ?>
 				<script>
 					get_all_articles(<?= $carte; ?>);
-				</script>
+				</script><input type="hidden" id="is_cotisant" value="1" />
 			<?php } else if(isset($_GET['fast_add_articles']) and $solde['solde']<0 and isset($user['autorisations']['bde'])) { ?>
 				<script>
 					popup("<h3>ATTENTION ! SOLDE NEGATIF !</h3><a href='#' onclick='recharge(<?= $carte; ?>)'>Recharger</a> / <a href='#' onclick='get_all_articles(<?= $carte; ?>)'>Encaisser article</a> ");
