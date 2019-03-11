@@ -37,4 +37,4 @@
 <iframe id='iframe' src="./pages/file.php" style='width:100%;height:500px;background:white;'></iframe>
 <a id='less' href="./annales" onclick="less();return false;" style='position:fixed;bottom:8px;right:32px;display:none;'>Réduire</a>
 -->
-	  <script>window.location='https://drive.google.com/drive/folders/0B8UQ_-N6TCbvRDZEcUtTS1hWc2M?usp=sharing'; </script>
+	  <script>window.location='https://drive.google.com/drive/folders/1GCfFZ7y_rwpN3wy3UiI-ALXzgxmeoTVA'; </script>
