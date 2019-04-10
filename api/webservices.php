@@ -1,11 +1,12 @@
 <?php
 
 ini_set("display_errors","1");
+require dirname(__FILE__) ."/config.conf.php";
 if(isset($_GET['table'])){
 	try
 	{
 		// On se connecte à MySQL
-		$bdd = new PDO('mysql:host=localhost;dbname=bde', 'bde','***REMOVED***');
+		$bdd = new PDO('mysql:host=localhost;dbname='.DB_NAME, DB_USER, DB_PASS);
 	}
 	catch(Exception $e)
 	{
